@@ -65,7 +65,7 @@ mengekspos repository di `presentation/`.
 ## 8. Alur Git
 - `main` untuk rilis, `dev` untuk integrasi. Kerjakan fitur di branch
   `feat/<nama>` atau `fix/<nama>` dari `dev` (detail di
-  [`CONTRIBUTING.md`](../CONTRIBUTING.md)).
+  [Alur Kerja Git](08_Git_Workflow.md)).
 - Sebelum commit: `flutter analyze` dan `flutter test` lulus.
 - Catat perubahan yang terlihat user di [`CHANGELOG.md`](../CHANGELOG.md).
 - **Jangan pernah commit** `android/key.properties`, file `.jks`/`.keystore`,
