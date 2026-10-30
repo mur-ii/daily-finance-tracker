@@ -49,7 +49,8 @@ app.*.map.json
 .widget_preview/
 
 # Lokal & rahasia — jangan masuk repository
-.claude/
+.claude/*
+!.claude/skills/
 *.env
 local.properties
 key.properties
