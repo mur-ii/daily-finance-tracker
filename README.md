@@ -71,9 +71,9 @@ assets/          # gambar, font yang di-bundel
 | [05 — Architecture](docs/05_Architecture.md) | Layer, provider Riverpod, routing, startup |
 | [06 — Development Guide](docs/06_Development_Guide.md) | Setup, testing, konvensi, migrasi DB |
 | [07 — Release Guide](docs/07_Release_Guide.md) | Keystore, versi, build & publikasi APK |
+| [08 — Git Workflow](docs/08_Git_Workflow.md) | Alur branch, pull request, commit, rilis |
 | [CHANGELOG](CHANGELOG.md) | Riwayat versi |
 | [SECURITY](SECURITY.md) | Cara melaporkan celah keamanan |
-| [CONTRIBUTING](CONTRIBUTING.md) | Alur branch, pull request, dan commit |
 
 ## Catatan
 - Font Inter & Space Grotesk di-bundel di `assets/google_fonts/` (lisensi OFL),
