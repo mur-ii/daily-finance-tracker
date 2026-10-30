@@ -1,0 +1,40 @@
+name: Laporan Bug
+description: Perilaku aplikasi yang tidak sesuai harapan
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: textarea
+    id: masalah
+    attributes:
+      label: Masalah
+      description: Apa yang terjadi dan apa yang seharusnya terjadi?
+    validations:
+      required: true
+  - type: textarea
+    id: langkah
+    attributes:
+      label: Langkah Reproduksi
+      placeholder: |
+        1. Buka layar ...
+        2. Ketuk ...
+    validations:
+      required: true
+  - type: input
+    id: versi
+    attributes:
+      label: Versi Aplikasi
+      placeholder: 1.0.0+1
+    validations:
+      required: true
+  - type: input
+    id: perangkat
+    attributes:
+      label: Perangkat & Versi Android
+      placeholder: Pixel 8, Android 15
+    validations:
+      required: true
+  - type: textarea
+    id: lampiran
+    attributes:
+      label: Log atau Tangkapan Layar
+      description: Pastikan tidak memuat data keuangan pribadi.
