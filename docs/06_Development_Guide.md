@@ -20,9 +20,10 @@ Konfigurasi VS Code (debug/profile/release) ada di `.vscode/launch.json`.
 | `test/features/daily_tracking/domain/` | `BudgetCalculator`, `StreakCalculator` (unit, murni) |
 | `test/features/daily_tracking/data/` | Repository sqflite memakai DB in-memory `sqflite_common_ffi` |
 | `test/features/daily_tracking/presentation/` | Providers, HomeScreen, alur transaksi (widget test) |
-| `test/features/budget_period/`, `onboarding/`, `settings/` | Widget test layar |
-| `test/core/` | Validators & widget reusable |
+| `test/features/budget_period/`, `onboarding/`, `settings/`, `about/` | Widget test layar |
+| `test/core/` | Format tanggal, validators & widget reusable |
 | `test/support/fake_repositories.dart` | Fake repository untuk widget test |
+| `test/flutter_test_config.dart` | Konfigurasi global yang berlaku untuk semua test |
 
 Pola: override `appDatabaseProvider`/repository provider dan `todayProvider`
 di `ProviderScope` test; `reminderServiceProvider` diganti fake. Mocking

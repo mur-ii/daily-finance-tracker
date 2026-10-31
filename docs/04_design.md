@@ -20,7 +20,7 @@ dan kode berbeda, **kode yang benar** — perbarui dokumen ini.
 | `ink` | `#000000` | Border, hard shadow, teks utama |
 | `surface` | `#FFFFFF` | Latar card, form, daftar transaksi |
 | `background` / `yellow` | `#FFDE00` | Latar utama aplikasi; state aktif |
-| `blue` | `#1D4ED8` | Aksen, blok chart |
+| `blue` | `#1D4ED8` | Warna `secondary` pada tema Material |
 | `green` (`success`) | `#22C55E` | Dalam anggaran (`withinBudgetColor`) |
 | `red` (`danger`) | `#EF4444` | Overbudget (`overBudgetColor`), aksi berbahaya |
 | `textSecondary` | `#3F3F46` | Teks sekunder (tetap gelap demi kontras) |
@@ -43,7 +43,7 @@ Font di-bundel di `assets/google_fonts/` (lisensi OFL), tidak diunduh saat runti
 ### A. Cards & Containers (`NeoBox`)
 Border 2px hitam, radius 4px, hard shadow 4×4. Pembatas internal: garis hitam 1–2px.
 
-### B. Buttons (`PrimaryButton`, FAB)
+### B. Buttons (`PrimaryButton`, `NeoButton`, FAB)
 - Background putih atau hitam (untuk tombol utama).
 - Border & shadow sama dengan card.
 - **Ditekan:** shadow hilang dan tombol turun sejauh `shadowOffset`.
@@ -59,5 +59,5 @@ Kotak putih, border hitam 2px; saat fokus border 3px.
 | `TransactionListTile` | Baris transaksi dengan ikon kategori |
 | `DangerConfirmDialog` | Konfirmasi aksi destruktif (hapus data) |
 | `AppDatePicker` | Pemilih tanggal (Syncfusion) bergaya neo |
-| `NeoBackground` | Latar kuning pembungkus setiap layar |
+| `NeoBackground` | Latar kuning pembungkus setiap layar; menjaga konten di atas navigation bar |
 | `SectionHeader`, `DetailRow` | Judul seksi & baris label–nilai |

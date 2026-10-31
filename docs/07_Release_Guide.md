@@ -60,6 +60,18 @@ $env:JAVA_HOME = "<Android Studio>\jbr"
 
 Certificate DN harus `CN=...` milik Anda, bukan `CN=Android Debug`.
 
+### Build uji untuk satu perangkat
+Untuk mencoba di HP sendiri dengan file lebih kecil (sekitar 10 MB, contoh `arm64`):
+
+```
+flutter build apk --release --split-per-abi --target-platform android-arm64 --android-project-arg=force-version-code-ignoring-abi=true
+```
+
+Hasil: `build/app/outputs/flutter-apk/app-arm64-v8a-release.apk`. Flag terakhir
+menjaga build number sama dengan `pubspec.yaml`; tanpa flag itu build number
+bertambah 2000 dan rilis resmi akan ditolak di HP tersebut. **Jangan sebarkan
+file ini** karena tidak bisa dipasang di perangkat 32-bit.
+
 ## 4. Publikasi
 1. Hitung hash: `certutil -hashfile daily-finance-tracker.apk SHA256`.
 2. Buat release (tag dibuat otomatis):

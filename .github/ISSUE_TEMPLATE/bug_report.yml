@@ -23,7 +23,8 @@ body:
     id: versi
     attributes:
       label: Versi Aplikasi
-      placeholder: 1.0.0+1
+      description: Lihat di menu Tentang Aplikasi.
+      placeholder: 1.0.1
     validations:
       required: true
   - type: input

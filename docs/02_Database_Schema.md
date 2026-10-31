@@ -7,6 +7,8 @@ Sumber kebenaran: [`lib/core/database/app_database.dart`](../lib/core/database/a
 - File database: `daily_tracking.db` di folder database bawaan platform.
 - Versi skema: `1` (`_schemaVersion`).
 - `PRAGMA foreign_keys = ON` diaktifkan di setiap koneksi (`onConfigure`).
+- Database dan SharedPreferences tidak ikut Auto Backup Android
+  (`allowBackup="false"`), sehingga tidak pulih setelah aplikasi dipasang ulang.
 - **Uang** disimpan sebagai `INTEGER` Rupiah bulat (bukan `double`).
 - **Tanggal** disimpan sebagai `TEXT` berformat `yyyy-MM-dd` tanpa jam,
   sehingga bisa diurutkan dan dibandingkan sebagai string.
@@ -66,6 +68,8 @@ budget_period 1 ──< fixed_expense
 ```
 - **Mulai periode baru** (`startNew`): dalam satu transaksi SQL, semua periode
   di-set `is_active = 0`, lalu periode baru di-insert dengan `is_active = 1`.
+- **Simpan pengeluaran wajib** (`saveChanges`): tambah, ubah, dan hapus diterapkan
+  dalam satu transaksi SQL, jadi semua berhasil atau tidak sama sekali.
 - **Hapus periode** (`delete`): hanya periode arsip (`is_active = 0`); tagihan
   dan transaksinya ikut terhapus lewat CASCADE.
 - **Hapus semua** (`deleteAll`): menghapus isi ketiga tabel dalam satu transaksi.

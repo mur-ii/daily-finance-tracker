@@ -8,7 +8,8 @@ belanja mengurangi jatah hari berikutnya.
 
 Prinsip produk:
 - **Tanpa akun, tanpa internet.** Semua data tersimpan lokal (SQLite +
-  SharedPreferences). Build release tidak meminta izin `INTERNET`.
+  SharedPreferences). Build release tidak meminta izin `INTERNET`, dan data
+  tidak ikut Auto Backup Android (`allowBackup="false"`).
 - **Satu angka utama.** Layar utama selalu menjawab "berapa yang boleh saya
   pakai hari ini?".
 - **Nominal Rupiah bulat.** Tidak ada desimal; disimpan sebagai `int`.
@@ -21,7 +22,9 @@ Prinsip produk:
    periode aktif, semua route diarahkan ke sini.
 4. **Pengeluaran Wajib** — user mendaftar tagihan wajib (Kos, Listrik,
    Internet). Total tagihan dipotong dari Saldo Awal menjadi Sisa Dana Bersih.
-   Bisa ditambah/diubah/dihapus kapan saja dari menu home.
+   Bisa ditambah/diubah/dihapus kapan saja dari menu home. Perubahan baru
+   tersimpan saat menekan Selesai; kembali dengan perubahan yang belum tersimpan
+   meminta konfirmasi.
 5. **Daily Tracking / Home** (`/`) — menampilkan "Limit Jajan Hari Ini",
    proyeksi limit besok, streak, dan daftar transaksi. Tombol "+" membuka sheet
    pencatatan pengeluaran (nominal, kategori, tanggal, catatan).
@@ -53,7 +56,7 @@ Prinsip produk:
 ## 4. Di Luar Cakupan (v1)
 - Sinkronisasi cloud, multi-perangkat, akun.
 - Pemasukan tambahan di tengah periode.
-- Ekspor/impor data.
+- Ekspor/impor data, sehingga data tidak bisa dipindahkan ke perangkat lain.
 - iOS dan desktop (proyek hanya menyiapkan Android).
 
 ## 5. Tech Stack
