@@ -1,9 +1,7 @@
 <div align="center">
-  <img src="assets/images/logo_app.png" alt="Logo Daily Finance Tracker" width="112">
+  <img src="assets/images/banner.png" alt="Daily Finance Tracker: tahu berapa yang aman dibelanjakan hari ini, sampai gajian berikutnya" width="100%">
 
   <h1>Daily Finance Tracker</h1>
-
-  <p><strong>Tahu berapa yang aman dibelanjakan hari ini, sampai gajian berikutnya.</strong></p>
 
   <p>
     <a href="https://github.com/mur-ii/daily-finance-tracker/releases/latest"><img src="https://img.shields.io/github/v/release/mur-ii/daily-finance-tracker?label=rilis" alt="Rilis terbaru"></a>
