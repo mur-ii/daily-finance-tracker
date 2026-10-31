@@ -1,14 +1,19 @@
 Copyright (c) 2026 Muhammad Sadri. All rights reserved.
 
 This software and its source code are proprietary. The source code is publicly
-visible for portfolio purposes only; this visibility does not grant any license.
+visible for portfolio purposes only; this visibility does not grant any license
+to the source code.
 
-Except for the rights GitHub's Terms of Service give to view this repository on
-GitHub, no part of this repository may be copied, modified, distributed,
-published, or used, in whole or in part, without prior written permission from
-the copyright holder.
+Anyone may install and use the official releases of the application free of
+charge for personal use, including managing their own finances. The application
+is provided "as is", without warranty of any kind.
 
-Third-party components keep their own licenses, including the bundled fonts
-Inter and Space Grotesk (SIL Open Font License 1.1, see assets/google_fonts/),
-the Syncfusion Flutter Date Picker (Syncfusion Community License or commercial
-license), and the other Dart/Flutter packages listed in pubspec.yaml.
+Except for the rights above and those GitHub's Terms of Service give to view this
+repository on GitHub, no part of this repository may be copied, modified,
+distributed, published, or used, in whole or in part, without prior written
+permission from the copyright holder.
+
+Third-party components keep their own licenses and terms, including the bundled
+fonts Inter and Space Grotesk (SIL Open Font License 1.1, see
+assets/google_fonts/), the Syncfusion Flutter Date Picker (Syncfusion license
+terms), and the other Dart/Flutter packages listed in pubspec.yaml.

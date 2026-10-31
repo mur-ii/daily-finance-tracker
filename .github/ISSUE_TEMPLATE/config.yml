@@ -1,1 +1,5 @@
 blank_issues_enabled: false
+contact_links:
+  - name: Diskusi Pengembangan
+    url: https://github.com/mur-ii/daily-finance-tracker/discussions
+    about: Ide dan diskusi untuk membuat aplikasi ini lebih baik.

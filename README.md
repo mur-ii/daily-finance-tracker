@@ -88,9 +88,6 @@ flutter test
 flutter run
 ```
 
-Paket `syncfusion_flutter_datepicker` memerlukan lisensi Syncfusion; lihat
-[Lisensi](#lisensi).
-
 ## Struktur Proyek
 ```
 lib/
@@ -114,18 +111,24 @@ assets/          # gambar, font yang di-bundel
 | [07 — Release Guide](docs/07_Release_Guide.md) | Keystore, versi, build & publikasi APK |
 | [08 — Git Workflow](docs/08_Git_Workflow.md) | Alur branch, pull request, commit, rilis |
 | [CHANGELOG](CHANGELOG.md) | Riwayat versi |
-| [CONTRIBUTING](CONTRIBUTING.md) | Cara memberi masukan |
+| [CONTRIBUTING](CONTRIBUTING.md) | Cara melaporkan bug, mengusulkan fitur, dan berdiskusi |
 | [SECURITY](SECURITY.md) | Cara melaporkan celah keamanan |
 
+## Masukan
+Pull request dari luar tidak diterima, tetapi bug dan usulan fitur bisa disampaikan
+lewat [issue](https://github.com/mur-ii/daily-finance-tracker/issues/new/choose),
+dan ide pengembangan lewat
+[Discussions](https://github.com/mur-ii/daily-finance-tracker/discussions).
+
 ## Lisensi
-Kode ditampilkan untuk portfolio dan **bukan open source**. Lihat [LICENSE](LICENSE).
+Aplikasi ini gratis dipakai untuk mengatur keuangan pribadi. Kode ditampilkan untuk
+portfolio dan **bukan open source**. Lihat [LICENSE](LICENSE).
 
 Komponen pihak ketiga mengikuti lisensinya masing-masing:
 - Font Inter dan Space Grotesk memakai SIL Open Font License 1.1
   ([`assets/google_fonts/`](assets/google_fonts/)).
-- `syncfusion_flutter_datepicker` adalah paket komersial Syncfusion yang memerlukan
-  [Community License](https://www.syncfusion.com/products/communitylicense) atau
-  lisensi komersial.
+- `syncfusion_flutter_datepicker` mengikuti
+  [ketentuan lisensi Syncfusion](https://github.com/syncfusion/flutter-examples/blob/master/LICENSE).
 
 ## Pengembang
 **Muhammad Sadri** · [sadri.my.id](https://sadri.my.id) · [GitHub](https://github.com/mur-ii)
