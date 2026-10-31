@@ -103,6 +103,49 @@ void main() {
       expect(await fixed.listByPeriod(periodId), isEmpty);
     });
 
+    test('saveChanges menerapkan semua perubahan sekaligus', () async {
+      final keep = await fixed.add(
+        FixedExpense(periodId: periodId, name: 'Kos', amount: 1000000),
+      );
+      final gone = await fixed.add(
+        FixedExpense(periodId: periodId, name: 'Wifi', amount: 300000),
+      );
+
+      await fixed.saveChanges(
+        added: [FixedExpense(periodId: periodId, name: 'Air', amount: 50000)],
+        updated: [
+          FixedExpense(
+            id: keep,
+            periodId: periodId,
+            name: 'Kos',
+            amount: 1200000,
+          ),
+        ],
+        removedIds: [gone],
+      );
+
+      final list = await fixed.listByPeriod(periodId);
+      expect(list.map((e) => e.name), ['Kos', 'Air']);
+      expect(list.first.amount, 1200000);
+    });
+
+    test('saveChanges membatalkan semua jika ada yang gagal', () async {
+      final id = await fixed.add(
+        FixedExpense(periodId: periodId, name: 'Kos', amount: 1000000),
+      );
+
+      await expectLater(
+        fixed.saveChanges(
+          added: [const FixedExpense(periodId: 999, name: 'X', amount: 1)],
+          updated: const [],
+          removedIds: [id],
+        ),
+        throwsA(isA<DatabaseException>()),
+      );
+
+      expect((await fixed.listByPeriod(periodId)).single.name, 'Kos');
+    });
+
     test('foreign key menolak periodId yang tidak ada', () async {
       expect(
         fixed.add(const FixedExpense(periodId: 999, name: 'X', amount: 1)),

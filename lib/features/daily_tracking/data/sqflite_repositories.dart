@@ -106,6 +106,34 @@ class SqfliteFixedExpenseRepository implements FixedExpenseRepository {
   Future<void> delete(int id) async {
     await _db.delete(DbTables.fixedExpense, where: 'id = ?', whereArgs: [id]);
   }
+
+  @override
+  Future<void> saveChanges({
+    required List<FixedExpense> added,
+    required List<FixedExpense> updated,
+    required List<int> removedIds,
+  }) {
+    return _db.transaction((txn) async {
+      for (final id in removedIds) {
+        await txn.delete(
+          DbTables.fixedExpense,
+          where: 'id = ?',
+          whereArgs: [id],
+        );
+      }
+      for (final expense in updated) {
+        await txn.update(
+          DbTables.fixedExpense,
+          expense.toMap(),
+          where: 'id = ?',
+          whereArgs: [expense.id],
+        );
+      }
+      for (final expense in added) {
+        await txn.insert(DbTables.fixedExpense, expense.toMap());
+      }
+    });
+  }
 }
 
 class SqfliteDailyTransactionRepository implements DailyTransactionRepository {

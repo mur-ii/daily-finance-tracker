@@ -140,6 +140,39 @@ class FixedExpensesNotifier extends AsyncNotifier<List<FixedExpense>> {
     ref.invalidateSelf();
     await future;
   }
+
+  /// Menyamakan tagihan periode aktif dengan [draft]. Item tanpa id ditambahkan,
+  /// item tersimpan yang tidak ada di [draft] dihapus.
+  Future<void> saveDraft(List<FixedExpense> draft) async {
+    final period = await ref.read(activePeriodProvider.future);
+    if (period == null) {
+      throw StateError('Tidak ada periode aktif.');
+    }
+    final repo = ref.read(fixedExpenseRepositoryProvider);
+    final saved = await repo.listByPeriod(period.id!);
+    final savedById = {for (final e in saved) e.id: e};
+    final draftIds = {for (final e in draft) e.id};
+
+    await repo.saveChanges(
+      added: [
+        for (final e in draft)
+          if (e.id == null) e,
+      ],
+      updated: [
+        for (final e in draft)
+          if (e.id != null &&
+              (savedById[e.id]?.name != e.name ||
+                  savedById[e.id]?.amount != e.amount))
+            e,
+      ],
+      removedIds: [
+        for (final e in saved)
+          if (!draftIds.contains(e.id)) e.id!,
+      ],
+    );
+    ref.invalidateSelf();
+    await future;
+  }
 }
 
 /// Transaksi harian milik periode aktif (terbaru di atas).

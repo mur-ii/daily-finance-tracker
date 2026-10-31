@@ -109,7 +109,9 @@ class HeroDailyLimitCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: AppSpacing.md),
-          DecoratedBox(
+          // Container memberi padding selebar border; DecoratedBox polos
+          // membuat border tertimpa indikator.
+          Container(
             decoration: const BoxDecoration(border: AppNeo.border),
             child: LinearProgressIndicator(
               value: spentRatio.clamp(0.0, 1.0),

@@ -34,13 +34,15 @@ memakai `mocktail`.
 - Uang selalu `int` Rupiah; format tampilan lewat `formatRupiah`, parsing input
   lewat `parseRupiah` ([`money.dart`](../lib/core/utils/money.dart)).
 - Bandingkan tanggal dengan `dateOnly`/`daysBetween`, jangan `DateTime` mentah.
+- Tampilkan tanggal lewat `formatDate`/`formatDayMonth`/`formatFullDate`
+  ([`date_utils.dart`](../lib/core/utils/date_utils.dart)).
 - Logika bisnis baru masuk `domain/` sebagai fungsi murni + unit test.
 - Warna & ukuran hanya dari token `AppColors`/`AppSpacing`/`AppNeo`.
 
 ## 5. Menambah Layar / Route
 1. Tambah konstanta path di [`routes.dart`](../lib/app/routes.dart).
 2. Daftarkan `GoRoute` di [`router.dart`](../lib/app/router.dart), bungkus
-   dengan `NeoBackground`.
+   dengan `NeoBackground` (latar dan jarak aman navigation bar).
 3. Navigasi memakai `context.go(...)`/`context.push(...)` dengan konstanta path.
 
 ## 6. Menambah Fitur

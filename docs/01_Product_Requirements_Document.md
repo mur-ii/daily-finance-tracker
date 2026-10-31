@@ -35,7 +35,7 @@ Prinsip produk:
    beserta ringkasan; detail bersifat read-only. Periode arsip bisa dihapus.
 10. **Pengaturan** (`/settings`) — pengingat harian (on/off, jam; default
     20:00) dan "Hapus semua data".
-11. **Tentang Pengembang** (`/about`) — profil dan tautan pengembang.
+11. **Tentang Aplikasi** (`/about`) — versi, fitur, privasi, lisensi, dan profil singkat pengembang.
 
 ## 3. Daftar Fitur
 | Fitur | Keterangan |

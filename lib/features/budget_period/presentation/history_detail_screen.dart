@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 
 import '../../../core/theme/app_dimens.dart';
 import '../../../core/theme/theme_context.dart';
+import '../../../core/utils/date_utils.dart';
 import '../../../core/utils/money.dart';
 import '../../../core/widgets/danger_confirm_dialog.dart';
 import '../../../core/widgets/detail_row.dart';
@@ -75,7 +75,6 @@ class _Detail extends StatelessWidget {
   Widget build(BuildContext context) {
     final period = data.period;
     final summary = data.summary;
-    final fmt = DateFormat.yMMMd();
     final remaining = summary.netFunds - summary.totalSpent;
     final semantic = context.semanticColors;
 
@@ -91,8 +90,8 @@ class _Detail extends StatelessWidget {
                 children: [
                   Expanded(
                     child: Text(
-                      '${fmt.format(period.startDate)} - '
-                      '${fmt.format(period.endDate)}',
+                      '${formatDate(period.startDate)} - '
+                      '${formatDate(period.endDate)}',
                       style: context.textTheme.titleMedium,
                     ),
                   ),
@@ -143,8 +142,8 @@ class _Detail extends StatelessWidget {
             icon: t.category.icon,
             title: t.category.label,
             subtitle: t.note.isEmpty
-                ? DateFormat.MMMd().format(t.date)
-                : '${t.note} · ${DateFormat.MMMd().format(t.date)}',
+                ? formatDayMonth(t.date)
+                : '${t.note} · ${formatDayMonth(t.date)}',
             amount: t.amount,
           ),
       ],

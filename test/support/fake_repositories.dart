@@ -134,4 +134,15 @@ class FakeFixedExpenseRepository implements FixedExpenseRepository {
 
   @override
   Future<void> delete(int id) async => items.removeWhere((e) => e.id == id);
+
+  @override
+  Future<void> saveChanges({
+    required List<FixedExpense> added,
+    required List<FixedExpense> updated,
+    required List<int> removedIds,
+  }) async {
+    removedIds.forEach(delete);
+    updated.forEach(update);
+    added.forEach(add);
+  }
 }

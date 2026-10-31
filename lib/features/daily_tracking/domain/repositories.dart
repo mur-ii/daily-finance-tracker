@@ -26,6 +26,14 @@ abstract interface class FixedExpenseRepository {
   Future<int> add(FixedExpense expense);
   Future<void> update(FixedExpense expense);
   Future<void> delete(int id);
+
+  /// Menerapkan sekumpulan perubahan sekaligus: semua berhasil atau tidak sama
+  /// sekali.
+  Future<void> saveChanges({
+    required List<FixedExpense> added,
+    required List<FixedExpense> updated,
+    required List<int> removedIds,
+  });
 }
 
 abstract interface class DailyTransactionRepository {

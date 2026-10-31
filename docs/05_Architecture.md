@@ -22,7 +22,7 @@ lib/
     ├── budget_period/        # Setup, periode baru, riwayat & detail
     ├── onboarding/           # Splash, onboarding, prefs onboarding
     ├── settings/             # Pengaturan pengingat, hapus semua data
-    └── about/                # Tentang pengembang
+    └── about/                # Tentang aplikasi
 ```
 
 ## 2. Layer

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 import '../theme/app_colors.dart';
 import '../theme/app_dimens.dart';
 import '../theme/theme_context.dart';
+import '../utils/date_utils.dart';
 import 'neo_box.dart';
 
 /// Bottom sheet pemilih tanggal (Syncfusion) sesuai docs/04_design.md.
@@ -74,7 +74,7 @@ class _AppDatePickerSheetState extends State<_AppDatePickerSheet> {
           Text(widget.title, style: text.titleLarge),
           const SizedBox(height: AppSpacing.xs),
           Text(
-            DateFormat.yMMMMEEEEd().format(_selected),
+            formatFullDate(_selected),
             style: text.bodyMedium?.copyWith(color: semantic.textSecondary),
           ),
           const SizedBox(height: AppSpacing.md),
@@ -204,10 +204,7 @@ class AppDateField extends StatelessWidget {
             color: AppColors.ink,
           ),
         ),
-        child: Text(
-          DateFormat.yMMMd().format(value),
-          style: context.textTheme.bodyLarge,
-        ),
+        child: Text(formatDate(value), style: context.textTheme.bodyLarge),
       ),
     );
   }
