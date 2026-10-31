@@ -15,5 +15,4 @@ permission from the copyright holder.
 
 Third-party components keep their own licenses and terms, including the bundled
 fonts Inter and Space Grotesk (SIL Open Font License 1.1, see
-assets/google_fonts/), the Syncfusion Flutter Date Picker (Syncfusion license
-terms), and the other Dart/Flutter packages listed in pubspec.yaml.
+assets/google_fonts/) and the Dart/Flutter packages listed in pubspec.yaml.

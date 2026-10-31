@@ -58,6 +58,6 @@ Kotak putih, border hitam 2px; saat fokus border 3px.
 | `StatusBanner` | Banner status (overbudget, periode berakhir) |
 | `TransactionListTile` | Baris transaksi dengan ikon kategori |
 | `DangerConfirmDialog` | Konfirmasi aksi destruktif (hapus data) |
-| `AppDatePicker` | Pemilih tanggal (Syncfusion) bergaya neo |
+| `AppDatePicker` | Pemilih tanggal (`CalendarDatePicker` bawaan Flutter) bergaya neo |
 | `NeoBackground` | Latar kuning pembungkus setiap layar; menjaga konten di atas navigation bar |
 | `SectionHeader`, `DetailRow` | Judul seksi & baris label–nilai |

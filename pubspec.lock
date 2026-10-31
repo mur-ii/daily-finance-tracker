@@ -754,22 +754,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.4.1"
-  syncfusion_flutter_core:
-    dependency: transitive
-    description:
-      name: syncfusion_flutter_core
-      sha256: "366faa4c374fdc0a789eb1d234c78ddbaca34ae575fe8a6481f9f72db5eb0d69"
-      url: "https://pub.dev"
-    source: hosted
-    version: "35.1.42"
-  syncfusion_flutter_datepicker:
-    dependency: "direct main"
-    description:
-      name: syncfusion_flutter_datepicker
-      sha256: "78c26cd627d0c6549b4bcae5ff9c53fe307a07bd4071122ef46a43d970e9c635"
-      url: "https://pub.dev"
-    source: hosted
-    version: "35.1.42"
   synchronized:
     dependency: transitive
     description:

@@ -124,11 +124,9 @@ dan ide pengembangan lewat
 Aplikasi ini gratis dipakai untuk mengatur keuangan pribadi. Kode ditampilkan untuk
 portfolio dan **bukan open source**. Lihat [LICENSE](LICENSE).
 
-Komponen pihak ketiga mengikuti lisensinya masing-masing:
-- Font Inter dan Space Grotesk memakai SIL Open Font License 1.1
-  ([`assets/google_fonts/`](assets/google_fonts/)).
-- `syncfusion_flutter_datepicker` mengikuti
-  [ketentuan lisensi Syncfusion](https://github.com/syncfusion/flutter-examples/blob/master/LICENSE).
+Komponen pihak ketiga mengikuti lisensinya masing-masing, termasuk font Inter dan
+Space Grotesk yang memakai SIL Open Font License 1.1
+([`assets/google_fonts/`](assets/google_fonts/)).
 
 ## Pengembang
 **Muhammad Sadri** · [sadri.my.id](https://sadri.my.id) · [GitHub](https://github.com/mur-ii)

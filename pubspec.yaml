@@ -40,7 +40,6 @@ dependencies:
   path: ^1.9.1
   intl: ^0.20.3
   google_fonts: ^9.0.0
-  syncfusion_flutter_datepicker: ^35.1.42
   url_launcher: ^6.3.3
   font_awesome_flutter: ^11.0.0
   shared_preferences: ^2.5.6

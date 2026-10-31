@@ -1,5 +1,7 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:syncfusion_flutter_datepicker/datepicker.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:intl/intl.dart';
 
 import '../theme/app_colors.dart';
 import '../theme/app_dimens.dart';
@@ -7,7 +9,53 @@ import '../theme/theme_context.dart';
 import '../utils/date_utils.dart';
 import 'neo_box.dart';
 
-/// Bottom sheet pemilih tanggal (Syncfusion) sesuai docs/04_design.md.
+/// Lokalisasi Indonesia untuk kalender: minggu dimulai Senin, bawaannya Minggu.
+class _MondayFirstLocalizations extends MaterialLocalizationId {
+  _MondayFirstLocalizations()
+    : super(
+        fullYearFormat: DateFormat.y(appLocale),
+        compactDateFormat: DateFormat.yMd(appLocale),
+        shortDateFormat: DateFormat.yMMMd(appLocale),
+        mediumDateFormat: DateFormat('EEE, MMM d', appLocale),
+        longDateFormat: DateFormat.yMMMMEEEEd(appLocale),
+        yearMonthFormat: DateFormat.yMMMM(appLocale),
+        shortMonthDayFormat: DateFormat.MMMd(appLocale),
+        decimalFormat: NumberFormat.decimalPattern(appLocale),
+        twoDigitZeroPaddedFormat: NumberFormat('00', appLocale),
+      );
+
+  @override
+  int get firstDayOfWeekIndex => 1;
+
+  // Bawaannya satu huruf, sehingga Senin, Selasa, dan Sabtu sama-sama "S".
+  @override
+  List<String> get narrowWeekdays => const [
+    'MIN',
+    'SEN',
+    'SEL',
+    'RAB',
+    'KAM',
+    'JUM',
+    'SAB',
+  ];
+}
+
+class _MondayFirstDelegate
+    extends LocalizationsDelegate<MaterialLocalizations> {
+  const _MondayFirstDelegate();
+
+  @override
+  bool isSupported(Locale locale) => true;
+
+  @override
+  Future<MaterialLocalizations> load(Locale locale) =>
+      SynchronousFuture(_MondayFirstLocalizations());
+
+  @override
+  bool shouldReload(_MondayFirstDelegate old) => false;
+}
+
+/// Bottom sheet pemilih tanggal sesuai docs/04_design.md.
 /// Mengembalikan `null` bila dibatalkan.
 Future<DateTime?> showAppDatePicker(
   BuildContext context, {
@@ -47,17 +95,60 @@ class _AppDatePickerSheet extends StatefulWidget {
 }
 
 class _AppDatePickerSheetState extends State<_AppDatePickerSheet> {
-  late DateTime _selected = widget.initialDate;
+  // CalendarDatePicker mewajibkan tanggal awal berada di dalam rentang.
+  late DateTime _selected = widget.initialDate.isBefore(widget.firstDate)
+      ? widget.firstDate
+      : widget.initialDate.isAfter(widget.lastDate)
+      ? widget.lastDate
+      : widget.initialDate;
+
+  ThemeData _calendarTheme(BuildContext context) {
+    final theme = Theme.of(context);
+    final colors = context.colors;
+    final text = context.textTheme;
+    final secondary = context.semanticColors.textSecondary;
+
+    WidgetStateProperty<Color?> foreground() =>
+        WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.selected)) return colors.onPrimary;
+          if (states.contains(WidgetState.disabled)) {
+            return secondary.withValues(alpha: 0.4);
+          }
+          return AppColors.ink;
+        });
+    final background = WidgetStateProperty.resolveWith<Color?>(
+      (states) => states.contains(WidgetState.selected) ? colors.primary : null,
+    );
+    const cellShape = WidgetStatePropertyAll<OutlinedBorder>(
+      RoundedRectangleBorder(borderRadius: AppRadius.smAll),
+    );
+
+    return theme.copyWith(
+      // Judul bulan pada header kalender memakai titleSmall.
+      textTheme: text.copyWith(titleSmall: text.titleMedium),
+      datePickerTheme: DatePickerThemeData(
+        subHeaderForegroundColor: AppColors.ink,
+        weekdayStyle: text.bodySmall?.copyWith(color: secondary),
+        dayStyle: text.bodyMedium,
+        dayShape: cellShape,
+        dayForegroundColor: foreground(),
+        dayBackgroundColor: background,
+        todayForegroundColor: foreground(),
+        todayBackgroundColor: background,
+        todayBorder: const BorderSide(color: AppColors.ink),
+        yearStyle: text.bodyMedium,
+        yearShape: cellShape,
+        yearForegroundColor: foreground(),
+        yearBackgroundColor: background,
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     final colors = context.colors;
     final text = context.textTheme;
     final semantic = context.semanticColors;
-    final selectedText = text.bodyMedium?.copyWith(
-      color: colors.onPrimary,
-      fontWeight: FontWeight.w700,
-    );
 
     // useSafeArea tidak menghindari navigation bar bawah, jadi tambahkan manual.
     return SingleChildScrollView(
@@ -80,60 +171,17 @@ class _AppDatePickerSheetState extends State<_AppDatePickerSheet> {
           const SizedBox(height: AppSpacing.md),
           NeoBox(
             shadow: false,
-            child: SizedBox(
-              height: 340,
-              child: SfDateRangePicker(
-                selectionMode: DateRangePickerSelectionMode.single,
-                initialSelectedDate: widget.initialDate,
-                initialDisplayDate: widget.initialDate,
-                minDate: widget.firstDate,
-                maxDate: widget.lastDate,
-                showNavigationArrow: true,
-                backgroundColor: Colors.transparent,
-                headerHeight: 48,
-                headerStyle: DateRangePickerHeaderStyle(
-                  backgroundColor: Colors.transparent,
-                  textAlign: TextAlign.center,
-                  textStyle: text.titleMedium,
+            child: Localizations.override(
+              context: context,
+              delegates: const [_MondayFirstDelegate()],
+              child: Theme(
+                data: _calendarTheme(context),
+                child: CalendarDatePicker(
+                  initialDate: _selected,
+                  firstDate: widget.firstDate,
+                  lastDate: widget.lastDate,
+                  onDateChanged: (value) => setState(() => _selected = value),
                 ),
-                monthViewSettings: DateRangePickerMonthViewSettings(
-                  firstDayOfWeek: 1,
-                  viewHeaderHeight: 32,
-                  viewHeaderStyle: DateRangePickerViewHeaderStyle(
-                    textStyle: text.bodySmall?.copyWith(
-                      color: semantic.textSecondary,
-                    ),
-                  ),
-                ),
-                monthCellStyle: DateRangePickerMonthCellStyle(
-                  textStyle: text.bodyMedium,
-                  todayTextStyle: text.bodyMedium?.copyWith(
-                    color: AppColors.ink,
-                    fontWeight: FontWeight.w800,
-                  ),
-                  disabledDatesTextStyle: text.bodyMedium?.copyWith(
-                    color: semantic.textSecondary.withValues(alpha: 0.4),
-                  ),
-                ),
-                yearCellStyle: DateRangePickerYearCellStyle(
-                  textStyle: text.bodyMedium,
-                  todayTextStyle: text.bodyMedium?.copyWith(
-                    color: AppColors.ink,
-                    fontWeight: FontWeight.w800,
-                  ),
-                  disabledDatesTextStyle: text.bodyMedium?.copyWith(
-                    color: semantic.textSecondary.withValues(alpha: 0.4),
-                  ),
-                ),
-                selectionShape: DateRangePickerSelectionShape.rectangle,
-                selectionRadius: AppRadius.sm,
-                selectionColor: colors.primary,
-                selectionTextStyle: selectedText,
-                todayHighlightColor: AppColors.ink,
-                onSelectionChanged: (args) {
-                  final value = args.value;
-                  if (value is DateTime) setState(() => _selected = value);
-                },
               ),
             ),
           ),

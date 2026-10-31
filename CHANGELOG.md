@@ -13,6 +13,7 @@ versi mengikuti `version` di `pubspec.yaml`.
 - Data tidak lagi ikut Auto Backup Android, sehingga hanya tersimpan di perangkat.
   Data tidak ikut pulih saat ganti perangkat atau memasang ulang aplikasi.
 - APK tidak lagi menyertakan `x86_64`, sehingga ukurannya lebih kecil.
+- Pemilih tanggal memakai kalender bawaan Flutter dengan tampilan yang sama.
 
 ### Diperbaiki
 - Tanggal tampil dalam format Indonesia, mis. 31 Oktober 2026.
