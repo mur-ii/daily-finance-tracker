@@ -35,6 +35,13 @@ void main() {
         carryOverFixedExpenses: carryOver,
       );
 
+  Future<void> saveKos() async {
+    final period = (await container.read(activePeriodProvider.future))!;
+    await container.read(fixedExpensesProvider.notifier).saveDraft([
+      FixedExpense(periodId: period.id!, name: 'Kos', amount: 1000000),
+    ]);
+  }
+
   DailyTransaction tx(DateTime date, int amount) => DailyTransaction(
     periodId: 0,
     date: date,
@@ -109,9 +116,7 @@ void main() {
   test('periode baru menonaktifkan lama dan menyalin tagihan wajib', () async {
     await container.read(activePeriodProvider.future);
     await startPeriod();
-    await container
-        .read(fixedExpensesProvider.notifier)
-        .add(name: 'Kos', amount: 1000000);
+    await saveKos();
     final oldId = (await container.read(activePeriodProvider.future))!.id;
 
     await startPeriod(carryOver: true);
@@ -126,26 +131,10 @@ void main() {
   test('periode baru tanpa carry-over mulai dengan tagihan kosong', () async {
     await container.read(activePeriodProvider.future);
     await startPeriod();
-    await container
-        .read(fixedExpensesProvider.notifier)
-        .add(name: 'Kos', amount: 1000000);
+    await saveKos();
 
     await startPeriod();
 
     expect(await container.read(fixedExpensesProvider.future), isEmpty);
-  });
-
-  test('edit tagihan wajib', () async {
-    await container.read(activePeriodProvider.future);
-    await startPeriod();
-    final notifier = container.read(fixedExpensesProvider.notifier);
-    await notifier.add(name: 'Kos', amount: 1000000);
-    final item = (await container.read(fixedExpensesProvider.future)).single;
-
-    await notifier.edit(item, name: ' Kos Baru ', amount: 1200000);
-
-    final edited = (await container.read(fixedExpensesProvider.future)).single;
-    expect(edited.name, 'Kos Baru');
-    expect(edited.amount, 1200000);
   });
 }

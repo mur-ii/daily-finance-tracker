@@ -127,22 +127,16 @@ class FakeFixedExpenseRepository implements FixedExpenseRepository {
   }
 
   @override
-  Future<void> update(FixedExpense expense) async {
-    final i = items.indexWhere((e) => e.id == expense.id);
-    if (i >= 0) items[i] = expense;
-  }
-
-  @override
-  Future<void> delete(int id) async => items.removeWhere((e) => e.id == id);
-
-  @override
   Future<void> saveChanges({
     required List<FixedExpense> added,
     required List<FixedExpense> updated,
     required List<int> removedIds,
   }) async {
-    removedIds.forEach(delete);
-    updated.forEach(update);
+    items.removeWhere((e) => removedIds.contains(e.id));
+    for (final expense in updated) {
+      final i = items.indexWhere((e) => e.id == expense.id);
+      if (i >= 0) items[i] = expense;
+    }
     added.forEach(add);
   }
 }

@@ -1,8 +1,8 @@
 # Berkontribusi
 
-Repository ini publik sebagai portfolio dan bersifat proprietary (lihat
-[LICENSE](LICENSE)). Pull request dari luar tidak diterima, tetapi masukan
-sangat dihargai:
+Repository ini publik untuk distribusi APK lewat GitHub Releases dan sebagai
+portfolio, dan bersifat proprietary (lihat [LICENSE](LICENSE)). Pull request dari
+luar tidak diterima, tetapi masukan sangat dihargai:
 
 - Bug dan usulan fitur: buka [issue](https://github.com/mur-ii/daily-finance-tracker/issues/new/choose).
 - Ide dan diskusi pengembangan aplikasi: buka [Discussions](https://github.com/mur-ii/daily-finance-tracker/discussions).

@@ -1,7 +1,7 @@
 # Panduan Pengembangan
 
 ## 1. Prasyarat
-- Flutter SDK dengan Dart `^3.13.7` (lihat `environment` di `pubspec.yaml`).
+- Flutter 3.47 (stable) dengan Dart `^3.13.7` (lihat `environment` di `pubspec.yaml`).
 - Android Studio (Android SDK + JDK bawaan `jbr`) untuk build Android.
 - Perangkat/emulator Android.
 
@@ -26,8 +26,8 @@ Konfigurasi VS Code (debug/profile/release) ada di `.vscode/launch.json`.
 | `test/flutter_test_config.dart` | Konfigurasi global yang berlaku untuk semua test |
 
 Pola: override `appDatabaseProvider`/repository provider dan `todayProvider`
-di `ProviderScope` test; `reminderServiceProvider` diganti fake. Mocking
-memakai `mocktail`.
+di `ProviderScope` test; `reminderServiceProvider` diganti fake. Test memakai
+fake buatan sendiri, tanpa library mocking.
 
 ## 4. Konvensi Kode
 - Lint: `flutter_lints` (`analysis_options.yaml`). `flutter analyze` harus bersih.

@@ -93,21 +93,6 @@ class SqfliteFixedExpenseRepository implements FixedExpenseRepository {
       _db.insert(DbTables.fixedExpense, expense.toMap());
 
   @override
-  Future<void> update(FixedExpense expense) async {
-    await _db.update(
-      DbTables.fixedExpense,
-      expense.toMap(),
-      where: 'id = ?',
-      whereArgs: [expense.id],
-    );
-  }
-
-  @override
-  Future<void> delete(int id) async {
-    await _db.delete(DbTables.fixedExpense, where: 'id = ?', whereArgs: [id]);
-  }
-
-  @override
   Future<void> saveChanges({
     required List<FixedExpense> added,
     required List<FixedExpense> updated,

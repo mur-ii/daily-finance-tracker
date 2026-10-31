@@ -45,7 +45,7 @@ void main() {
     expect(period?.id, isNotNull);
   });
 
-  test('add dan remove tagihan wajib', () async {
+  test('saveDraft menambah, mengubah, dan menghapus tagihan wajib', () async {
     await container.read(activePeriodProvider.future);
     await container
         .read(activePeriodProvider.notifier)
@@ -55,12 +55,27 @@ void main() {
           daysCount: 30,
         );
 
+    final periodId = (await container.read(activePeriodProvider.future))!.id!;
     final notifier = container.read(fixedExpensesProvider.notifier);
-    await notifier.add(name: '  Kos ', amount: 1000000);
+    await notifier.saveDraft([
+      FixedExpense(periodId: periodId, name: 'Kos', amount: 1000000),
+    ]);
     var list = await container.read(fixedExpensesProvider.future);
     expect(list.single.name, 'Kos');
 
-    await notifier.remove(list.single.id!);
+    await notifier.saveDraft([
+      FixedExpense(
+        id: list.single.id,
+        periodId: periodId,
+        name: 'Kos Baru',
+        amount: 1200000,
+      ),
+    ]);
+    list = await container.read(fixedExpensesProvider.future);
+    expect(list.single.name, 'Kos Baru');
+    expect(list.single.amount, 1200000);
+
+    await notifier.saveDraft(const []);
     list = await container.read(fixedExpensesProvider.future);
     expect(list, isEmpty);
   });
@@ -104,12 +119,10 @@ void main() {
     },
   );
 
-  test('add tanpa periode aktif melempar StateError', () async {
+  test('saveDraft tanpa periode aktif melempar StateError', () async {
     await container.read(fixedExpensesProvider.future);
     expect(
-      () => container
-          .read(fixedExpensesProvider.notifier)
-          .add(name: 'Kos', amount: 1),
+      () => container.read(fixedExpensesProvider.notifier).saveDraft(const []),
       throwsStateError,
     );
   });

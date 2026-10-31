@@ -102,45 +102,6 @@ class FixedExpensesNotifier extends AsyncNotifier<List<FixedExpense>> {
     return ref.watch(fixedExpenseRepositoryProvider).listByPeriod(period.id!);
   }
 
-  Future<void> add({required String name, required int amount}) async {
-    final period = await ref.read(activePeriodProvider.future);
-    if (period == null) {
-      throw StateError('Tidak ada periode aktif.');
-    }
-    await ref
-        .read(fixedExpenseRepositoryProvider)
-        .add(
-          FixedExpense(periodId: period.id!, name: name.trim(), amount: amount),
-        );
-    ref.invalidateSelf();
-    await future;
-  }
-
-  Future<void> edit(
-    FixedExpense expense, {
-    required String name,
-    required int amount,
-  }) async {
-    await ref
-        .read(fixedExpenseRepositoryProvider)
-        .update(
-          FixedExpense(
-            id: expense.id,
-            periodId: expense.periodId,
-            name: name.trim(),
-            amount: amount,
-          ),
-        );
-    ref.invalidateSelf();
-    await future;
-  }
-
-  Future<void> remove(int id) async {
-    await ref.read(fixedExpenseRepositoryProvider).delete(id);
-    ref.invalidateSelf();
-    await future;
-  }
-
   /// Menyamakan tagihan periode aktif dengan [draft]. Item tanpa id ditambahkan,
   /// item tersimpan yang tidak ada di [draft] dihapus.
   Future<void> saveDraft(List<FixedExpense> draft) async {

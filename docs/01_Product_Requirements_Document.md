@@ -27,7 +27,8 @@ Prinsip produk:
    meminta konfirmasi.
 5. **Daily Tracking / Home** (`/`) — menampilkan "Limit Jajan Hari Ini",
    proyeksi limit besok, streak, dan daftar transaksi. Tombol "+" membuka sheet
-   pencatatan pengeluaran (nominal, kategori, tanggal, catatan).
+   pencatatan pengeluaran (nominal, kategori, tanggal, catatan). Setelah periode
+   berakhir, tombol "+" hilang dan muncul ajakan memulai periode baru.
 6. **Auto-Calculation** — setiap perubahan transaksi/tagihan langsung
    menghitung ulang limit hari ini dan hari-hari berikutnya.
 7. **Tidak Jajan** — bila hari ini tidak ada pengeluaran, user bisa menandai
@@ -47,11 +48,12 @@ Prinsip produk:
 | Pengeluaran wajib | CRUD; opsional disalin ke periode baru |
 | Transaksi harian | CRUD; kategori Makan, Transport, Belanja, Lainnya; tanggal harus di dalam periode |
 | Limit harian + rollover | Lihat [03_Calculation_Logic.md](03_Calculation_Logic.md) |
-| Status overbudget | Limit < 0 ditampilkan merah |
+| Status limit | "Hampir habis" saat 80% dana hari ini terpakai; "Overbudget" dan angka merah saat limit < 0 |
+| Banner hemat | Tampil saat ada sisa dari hari sebelumnya yang menambah limit hari ini |
 | Streak pencatatan | Hari berturut-turut ada transaksi atau ditandai "Tidak jajan" |
 | Pengingat harian | Notifikasi lokal terjadwal (inexact), tetap aktif setelah reboot |
 | Riwayat periode | Ringkasan & detail read-only, hapus arsip |
-| Reset data | Menghapus semua periode, tagihan, transaksi, dan hari tidak jajan |
+| Reset data | Menghapus semua periode, tagihan, transaksi, dan hari tidak jajan; wajib mengetik `HAPUS` |
 
 ## 4. Di Luar Cakupan (v1)
 - Sinkronisasi cloud, multi-perangkat, akun.

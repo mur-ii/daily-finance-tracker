@@ -1,8 +1,10 @@
-# Panduan Rilis (APK untuk website)
+# Panduan Rilis (GitHub Releases)
 
 - Application ID: `my.id.sadri.dailytracking`
 - Distribusi: APK di-host di GitHub Releases, tombol unduh ada di
   https://sadri.my.id (bukan Play Store).
+- Repository harus publik. Pada repository privat, link unduhan menghasilkan 404
+  bagi pengguna yang tidak login sebagai kolaborator.
 
 ## 1. Keystore (sekali saja)
 `keytool` ada di JDK bawaan Android Studio (`<Android Studio>\jbr\bin\`).
@@ -73,10 +75,13 @@ bertambah 2000 dan rilis resmi akan ditolak di HP tersebut. **Jangan sebarkan
 file ini** karena tidak bisa dipasang di perangkat 32-bit.
 
 ## 4. Publikasi
+Build dan publikasikan dari `main` setelah PR rilis di-merge
+([Alur Kerja Git](08_Git_Workflow.md#4-rilis)).
+
 1. Hitung hash: `certutil -hashfile daily-finance-tracker.apk SHA256`.
-2. Buat release (tag dibuat otomatis):
+2. Buat release (tag dibuat otomatis dari `main`):
    ```
-   gh release create v<versi> daily-finance-tracker.apk --title "v<versi>" --notes "<ringkasan CHANGELOG + SHA-256>"
+   gh release create v<versi> daily-finance-tracker.apk --target main --title "v<versi>" --notes "<ringkasan CHANGELOG + SHA-256>"
    ```
 3. Tombol unduh di website memakai link permanen ke rilis terbaru:
    ```
@@ -91,3 +96,4 @@ file ini** karena tidak bisa dipasang di perangkat 32-bit.
 - [ ] Build ditandatangani keystore release (bukan debug)
 - [ ] Uji install di atas versi sebelumnya (data lama tetap ada)
 - [ ] SHA-256 dipublikasikan bersama APK
+- [ ] Link unduhan bisa dibuka tanpa login GitHub

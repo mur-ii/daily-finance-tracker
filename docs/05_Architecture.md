@@ -47,9 +47,9 @@ Fitur `budget_period` memakai entity, repository, dan provider dari
 | Provider | Jenis | Isi |
 | --- | --- | --- |
 | `activePeriodProvider` | AsyncNotifier | Periode aktif; aksi `startNew`, `deleteArchived`, `resetAll` |
-| `fixedExpensesProvider` | AsyncNotifier | Tagihan periode aktif; CRUD |
-| `transactionsProvider` | AsyncNotifier | Transaksi periode aktif; CRUD |
-| `noSpendDaysProvider` | AsyncNotifier | Hari "Tidak jajan" |
+| `fixedExpensesProvider` | AsyncNotifier | Tagihan periode aktif; aksi `saveDraft` (tambah, ubah, hapus sekaligus) |
+| `transactionsProvider` | AsyncNotifier | Transaksi periode aktif; aksi `save`, `remove` |
+| `noSpendDaysProvider` | AsyncNotifier | Hari "Tidak jajan"; aksi `markToday` |
 | `streakProvider` | FutureProvider | Streak pencatatan |
 | `dashboardProvider` | FutureProvider | Periode + `BudgetSummary` + transaksi untuk home |
 | `periodHistoryProvider` | FutureProvider.autoDispose | Semua periode + ringkasan |

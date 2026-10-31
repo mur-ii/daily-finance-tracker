@@ -6,7 +6,7 @@ plugins {
     id("dev.flutter.flutter-gradle-plugin")
 }
 
-// Kredensial keystore release, lihat README. File ini di-ignore git.
+// Kredensial keystore release, lihat docs/07_Release_Guide.md. File ini di-ignore git.
 val keystorePropertiesFile = rootProject.file("key.properties")
 val keystoreProperties = Properties().apply {
     if (keystorePropertiesFile.exists()) {

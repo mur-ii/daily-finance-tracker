@@ -86,21 +86,12 @@ void main() {
     late int periodId;
     setUp(() async => periodId = await periods.startNew(newPeriod()));
 
-    test('add, list, update, delete', () async {
-      final id = await fixed.add(
+    test('add, list', () async {
+      await fixed.add(
         FixedExpense(periodId: periodId, name: 'Kos', amount: 1000000),
       );
-      var list = await fixed.listByPeriod(periodId);
+      final list = await fixed.listByPeriod(periodId);
       expect(list.single.name, 'Kos');
-
-      await fixed.update(
-        FixedExpense(id: id, periodId: periodId, name: 'Kos', amount: 1200000),
-      );
-      list = await fixed.listByPeriod(periodId);
-      expect(list.single.amount, 1200000);
-
-      await fixed.delete(id);
-      expect(await fixed.listByPeriod(periodId), isEmpty);
     });
 
     test('saveChanges menerapkan semua perubahan sekaligus', () async {

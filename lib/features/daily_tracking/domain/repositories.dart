@@ -24,8 +24,6 @@ abstract interface class BudgetPeriodRepository {
 abstract interface class FixedExpenseRepository {
   Future<List<FixedExpense>> listByPeriod(int periodId);
   Future<int> add(FixedExpense expense);
-  Future<void> update(FixedExpense expense);
-  Future<void> delete(int id);
 
   /// Menerapkan sekumpulan perubahan sekaligus: semua berhasil atau tidak sama
   /// sekali.

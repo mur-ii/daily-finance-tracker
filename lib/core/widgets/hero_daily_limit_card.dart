@@ -17,15 +17,13 @@ enum LimitStatus {
   /// Overbudget: tag & progress merah, angka merah.
   over;
 
-  /// [spentRatio] = terpakai / jatah (0..1+). Warning mulai di
-  /// [warningThreshold].
+  /// [spentRatio] = terpakai / jatah (0..1+). Warning mulai di 80%.
   static LimitStatus from({
     required int remaining,
     required double spentRatio,
-    double warningThreshold = 0.8,
   }) {
     if (remaining < 0) return LimitStatus.over;
-    if (spentRatio >= warningThreshold) return LimitStatus.warning;
+    if (spentRatio >= 0.8) return LimitStatus.warning;
     return LimitStatus.healthy;
   }
 }
@@ -38,7 +36,6 @@ class HeroDailyLimitCard extends StatelessWidget {
     required this.remaining,
     required this.spentRatio,
     this.label = 'Limit jajan hari ini',
-    this.status,
     this.footer = const [],
   });
 
@@ -50,9 +47,6 @@ class HeroDailyLimitCard extends StatelessWidget {
 
   final String label;
 
-  /// Default dihitung dari [remaining] dan [spentRatio].
-  final LimitStatus? status;
-
   /// Konten tambahan di bawah progress bar, mis. [HeroLimitDetailRow].
   final List<Widget> footer;
 
@@ -61,9 +55,10 @@ class HeroDailyLimitCard extends StatelessWidget {
     final colors = context.colors;
     final semantic = context.semanticColors;
     final textTheme = context.textTheme;
-    final resolved =
-        status ??
-        LimitStatus.from(remaining: remaining, spentRatio: spentRatio);
+    final resolved = LimitStatus.from(
+      remaining: remaining,
+      spentRatio: spentRatio,
+    );
 
     final accent = switch (resolved) {
       LimitStatus.healthy => colors.primary,

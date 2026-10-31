@@ -6,6 +6,7 @@
   <p><strong>Tahu berapa yang aman dibelanjakan hari ini, sampai gajian berikutnya.</strong></p>
 
   <p>
+    <a href="https://github.com/mur-ii/daily-finance-tracker/releases/latest"><img src="https://img.shields.io/github/v/release/mur-ii/daily-finance-tracker?label=rilis" alt="Rilis terbaru"></a>
     <img src="https://img.shields.io/badge/platform-Android%207.0%2B-3DDC84?logo=android&logoColor=white" alt="Android 7.0+">
     <img src="https://img.shields.io/badge/Flutter-Dart%203-02569B?logo=flutter&logoColor=white" alt="Flutter">
     <img src="https://img.shields.io/badge/data-100%25%20lokal-000000" alt="Data 100% lokal">
@@ -17,22 +18,15 @@ Aplikasi Android untuk mengatur uang harian tanpa akun dan tanpa internet.
 Masukkan saldo, tagihan wajib, dan jumlah hari sampai gajian; aplikasi menghitung
 limit belanja hari ini dan menyesuaikannya setiap kali Anda mencatat pengeluaran.
 
-<!--
-Tangkapan layar: hapus komentar ini setelah file tersedia di docs/screenshots/.
-
-## Tangkapan Layar
-| Beranda | Catat Pengeluaran | Pengeluaran Wajib | Riwayat |
-| --- | --- | --- | --- |
-| ![Beranda](docs/screenshots/home.png) | ![Catat pengeluaran](docs/screenshots/transaction.png) | ![Pengeluaran wajib](docs/screenshots/fixed-expenses.png) | ![Riwayat periode](docs/screenshots/history.png) |
--->
-
 ## Fitur
 - **Limit jajan hari ini** dengan rollover: sisa hari ini menambah jatah besok,
   kelebihan belanja mengurangi jatah besok.
 - **Pengeluaran wajib** seperti kos, listrik, dan internet dipotong di awal periode.
 - **Catat pengeluaran** per kategori: Makan, Transport, Belanja, dan Lainnya.
-- **Status overbudget** berwarna merah, disertai proyeksi limit besok.
+- **Status limit**: tag "Hampir habis" saat 80% dana hari ini terpakai, tag
+  "Overbudget" dan angka merah saat limit minus, disertai proyeksi limit besok.
 - **Streak pencatatan** dan tombol "Tidak jajan".
+- **Periode baru** saat gajian, dengan opsi menyalin pengeluaran wajib.
 - **Riwayat periode** gajian beserta ringkasannya.
 - **Pengingat harian** lewat notifikasi lokal, dengan jam yang bisa diatur.
 
@@ -57,12 +51,16 @@ Aturan lengkapnya ada di [Calculation Logic](docs/03_Calculation_Logic.md).
 Unduh hanya dari dua sumber di atas. APK dari tempat lain tidak ditandatangani
 oleh pengembang dan tidak bisa meng-update versi resmi.
 
+Saat memasang pertama kali, Android akan meminta izin memasang aplikasi dari
+browser atau pengelola file yang dipakai. Untuk update, pasang APK versi baru di
+atas versi lama; data tetap ada.
+
 ## Privasi
 - Semua data tersimpan **hanya di perangkat** (SQLite). Tidak ada akun, analitik,
   iklan, atau server.
 - Aplikasi tidak meminta izin internet. Izin yang dipakai hanya notifikasi dan
   getar (pengingat harian) serta boot (memulihkan jadwal pengingat setelah HP
-  restart).
+  restart). Tautan di halaman Tentang Aplikasi dibuka di browser perangkat.
 - Data tidak ikut Auto Backup Android, sehingga tidak bisa dipulihkan saat ganti
   perangkat atau memasang ulang aplikasi.
 - Menghapus aplikasi atau "Hapus semua data" di Pengaturan menghapus seluruh data.
@@ -76,10 +74,10 @@ oleh pengembang dan tidak bisa meng-update versi resmi.
 | Penyimpanan | sqflite, shared_preferences |
 | Notifikasi | flutter_local_notifications |
 | Antarmuka | Material 3 dengan gaya Neo-Brutalism |
-| Pengujian | flutter_test, mocktail, sqflite_common_ffi |
+| Pengujian | flutter_test, sqflite_common_ffi |
 
 ## Menjalankan Proyek
-Butuh Flutter SDK dengan Dart `^3.13.7` dan Android SDK.
+Butuh Flutter 3.47 (stable) dengan Dart `^3.13.7` dan Android SDK.
 
 ```
 flutter pub get
@@ -121,8 +119,9 @@ dan ide pengembangan lewat
 [Discussions](https://github.com/mur-ii/daily-finance-tracker/discussions).
 
 ## Lisensi
-Aplikasi ini gratis dipakai untuk mengatur keuangan pribadi. Kode ditampilkan untuk
-portfolio dan **bukan open source**. Lihat [LICENSE](LICENSE).
+Aplikasi ini gratis dipakai untuk mengatur keuangan pribadi. Repository ini publik
+untuk distribusi APK lewat GitHub Releases dan sebagai portfolio, tetapi kodenya
+**bukan open source**. Lihat [LICENSE](LICENSE).
 
 Komponen pihak ketiga mengikuti lisensinya masing-masing, termasuk font Inter dan
 Space Grotesk yang memakai SIL Open Font License 1.1
