@@ -11,7 +11,7 @@ di perangkat (SQLite), tanpa akun dan tanpa internet.
 ## Unduh
 - Website resmi: https://sadri.my.id
 - Langsung: [daily-finance-tracker.apk](https://github.com/mur-ii/daily-finance-tracker/releases/latest/download/daily-finance-tracker.apk)
-  (Android 7.0+). SHA-256 setiap versi tercantum di halaman
+  (Android 7.0+, perangkat ARM). SHA-256 setiap versi tercantum di halaman
   [Releases](https://github.com/mur-ii/daily-finance-tracker/releases).
 
 Unduh hanya dari dua sumber di atas. APK dari tempat lain tidak ditandatangani
@@ -23,8 +23,8 @@ oleh pengembang dan tidak bisa meng-update versi resmi.
 - Aplikasi tidak meminta izin internet. Izin yang dipakai hanya notifikasi
   & getar (pengingat harian) dan boot (memulihkan jadwal pengingat setelah HP
   restart).
-- Data dapat ikut tercadang otomatis oleh Android (backup Google milik
-  pengguna) sehingga bisa dipulihkan saat ganti perangkat.
+- Data tidak ikut Auto Backup Android, sehingga tidak bisa dipulihkan saat ganti
+  perangkat atau memasang ulang aplikasi.
 - Menghapus aplikasi atau "Hapus semua data" di Pengaturan menghapus seluruh data.
 
 ## Fitur

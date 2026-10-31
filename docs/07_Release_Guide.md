@@ -38,20 +38,28 @@ flutter clean
 flutter pub get
 flutter analyze
 flutter test
-flutter build apk --release
+flutter build apk --release --target-platform android-arm,android-arm64
 ```
+
+`x86_64` sengaja tidak disertakan: hampir hanya dipakai emulator dan menambah
+sekitar 8,6 MB. `abiFilters` di `android/app/build.gradle.kts` memastikan library
+x86_64 milik plugin ikut terbuang. Untuk mencoba di emulator x86_64, pakai
+`flutter run`.
 
 Hasil: `build/app/outputs/flutter-apk/app-release.apk`. Salin dengan nama
 tetap `daily-finance-tracker.apk` — nama yang sama setiap rilis membuat link
 unduhan di website tidak perlu diganti.
 
-Pastikan APK ditandatangani keystore release, bukan debug key:
+Pastikan APK ditandatangani keystore release, bukan debug key. APK ini hanya
+memakai skema v2, jadi `keytool -printcert -jarfile` tidak bisa dipakai karena
+selalu menjawab `Not a signed jar file`. Gunakan `apksigner`:
 
 ```
-& "<Android Studio>\jbr\bin\keytool.exe" -printcert -jarfile daily-finance-tracker.apk
+$env:JAVA_HOME = "<Android Studio>\jbr"
+& "<Android SDK>\build-tools\<versi>\apksigner.bat" verify --print-certs daily-finance-tracker.apk
 ```
 
-Owner harus `CN=...` milik Anda, bukan `CN=Android Debug`.
+Certificate DN harus `CN=...` milik Anda, bukan `CN=Android Debug`.
 
 ## 4. Publikasi
 1. Hitung hash: `certutil -hashfile daily-finance-tracker.apk SHA256`.

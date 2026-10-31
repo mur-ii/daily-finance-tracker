@@ -60,6 +60,11 @@ android {
 
     buildTypes {
         release {
+            // Tanpa filter ini library x86_64 milik plugin tetap ikut, sehingga
+            // perangkat x86_64 bisa memasang APK yang tidak punya libflutter.so.
+            ndk {
+                abiFilters += listOf("armeabi-v7a", "arm64-v8a")
+            }
             // APK disebar lewat website: setiap update WAJIB ditandatangani
             // keystore yang sama, kalau tidak user gagal memasang update.
             signingConfig = if (keystorePropertiesFile.exists()) {
