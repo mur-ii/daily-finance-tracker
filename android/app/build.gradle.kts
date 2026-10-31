@@ -60,11 +60,6 @@ android {
 
     buildTypes {
         release {
-            // Tanpa filter ini library x86_64 milik plugin tetap ikut, sehingga
-            // perangkat x86_64 bisa memasang APK yang tidak punya libflutter.so.
-            ndk {
-                abiFilters += listOf("armeabi-v7a", "arm64-v8a")
-            }
             // APK disebar lewat website: setiap update WAJIB ditandatangani
             // keystore yang sama, kalau tidak user gagal memasang update.
             signingConfig = if (keystorePropertiesFile.exists()) {
@@ -74,6 +69,14 @@ android {
                 signingConfigs.getByName("debug")
             }
         }
+    }
+}
+
+// Release tanpa libflutter.so x86_64: library plugin x86_64 harus ikut dibuang,
+// kalau tidak perangkat x86_64 bisa memasang APK yang crash saat dibuka.
+androidComponents {
+    onVariants(selector().withBuildType("release")) { variant ->
+        variant.packaging.jniLibs.excludes.add("lib/x86_64/**")
     }
 }
 

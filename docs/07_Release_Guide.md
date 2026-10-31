@@ -42,9 +42,8 @@ flutter build apk --release --target-platform android-arm,android-arm64
 ```
 
 `x86_64` sengaja tidak disertakan: hampir hanya dipakai emulator dan menambah
-sekitar 8,6 MB. `abiFilters` di `android/app/build.gradle.kts` memastikan library
-x86_64 milik plugin ikut terbuang. Untuk mencoba di emulator x86_64, pakai
-`flutter run`.
+sekitar 8,6 MB. `android/app/build.gradle.kts` membuang library x86_64 milik plugin
+dari varian release. Untuk mencoba di emulator x86_64, pakai `flutter run`.
 
 Hasil: `build/app/outputs/flutter-apk/app-release.apk`. Salin dengan nama
 tetap `daily-finance-tracker.apk` — nama yang sama setiap rilis membuat link
