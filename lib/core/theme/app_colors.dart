@@ -10,7 +10,7 @@ abstract final class AppColors {
   /// Latar utama aplikasi (kuning terang, solid).
   static const Color background = Color(0xFFFFDE00);
 
-  // Accent — blok warna solid untuk chart, tag status, dan peringatan.
+  // Accent — blok warna solid untuk tag status dan peringatan.
   static const Color yellow = Color(0xFFFFDE00);
   static const Color blue = Color(0xFF1D4ED8);
   static const Color green = Color(0xFF22C55E);
@@ -27,7 +27,3 @@ abstract final class AppColors {
 
   static const Color disabled = Color(0xFFE4E4E7);
 }
-
-/// Warna status anggaran.
-const Color withinBudgetColor = AppColors.success;
-const Color overBudgetColor = AppColors.danger;

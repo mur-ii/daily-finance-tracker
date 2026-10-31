@@ -1,8 +1,10 @@
-# Panduan Rilis (APK untuk website)
+# Panduan Rilis (GitHub Releases)
 
 - Application ID: `my.id.sadri.dailytracking`
 - Distribusi: APK di-host di GitHub Releases, tombol unduh ada di
   https://sadri.my.id (bukan Play Store).
+- Repository harus publik. Pada repository privat, link unduhan menghasilkan 404
+  bagi pengguna yang tidak login sebagai kolaborator.
 
 ## 1. Keystore (sekali saja)
 `keytool` ada di JDK bawaan Android Studio (`<Android Studio>\jbr\bin\`).
@@ -38,26 +40,48 @@ flutter clean
 flutter pub get
 flutter analyze
 flutter test
-flutter build apk --release
+flutter build apk --release --target-platform android-arm,android-arm64
 ```
+
+`x86_64` sengaja tidak disertakan: hampir hanya dipakai emulator dan menambah
+sekitar 8,6 MB. `android/app/build.gradle.kts` membuang library x86_64 milik plugin
+dari varian release. Untuk mencoba di emulator x86_64, pakai `flutter run`.
 
 Hasil: `build/app/outputs/flutter-apk/app-release.apk`. Salin dengan nama
 tetap `daily-finance-tracker.apk` — nama yang sama setiap rilis membuat link
 unduhan di website tidak perlu diganti.
 
-Pastikan APK ditandatangani keystore release, bukan debug key:
+Pastikan APK ditandatangani keystore release, bukan debug key. APK ini hanya
+memakai skema v2, jadi `keytool -printcert -jarfile` tidak bisa dipakai karena
+selalu menjawab `Not a signed jar file`. Gunakan `apksigner`:
 
 ```
-& "<Android Studio>\jbr\bin\keytool.exe" -printcert -jarfile daily-finance-tracker.apk
+$env:JAVA_HOME = "<Android Studio>\jbr"
+& "<Android SDK>\build-tools\<versi>\apksigner.bat" verify --print-certs daily-finance-tracker.apk
 ```
 
-Owner harus `CN=...` milik Anda, bukan `CN=Android Debug`.
+Certificate DN harus `CN=...` milik Anda, bukan `CN=Android Debug`.
+
+### Build uji untuk satu perangkat
+Untuk mencoba di HP sendiri dengan file lebih kecil (sekitar 10 MB, contoh `arm64`):
+
+```
+flutter build apk --release --split-per-abi --target-platform android-arm64 --android-project-arg=force-version-code-ignoring-abi=true
+```
+
+Hasil: `build/app/outputs/flutter-apk/app-arm64-v8a-release.apk`. Flag terakhir
+menjaga build number sama dengan `pubspec.yaml`; tanpa flag itu build number
+bertambah 2000 dan rilis resmi akan ditolak di HP tersebut. **Jangan sebarkan
+file ini** karena tidak bisa dipasang di perangkat 32-bit.
 
 ## 4. Publikasi
+Build dan publikasikan dari `main` setelah PR rilis di-merge
+([Alur Kerja Git](08_Git_Workflow.md#4-rilis)).
+
 1. Hitung hash: `certutil -hashfile daily-finance-tracker.apk SHA256`.
-2. Buat release (tag dibuat otomatis):
+2. Buat release (tag dibuat otomatis dari `main`):
    ```
-   gh release create v<versi> daily-finance-tracker.apk --title "v<versi>" --notes "<ringkasan CHANGELOG + SHA-256>"
+   gh release create v<versi> daily-finance-tracker.apk --target main --title "v<versi>" --notes "<ringkasan CHANGELOG + SHA-256>"
    ```
 3. Tombol unduh di website memakai link permanen ke rilis terbaru:
    ```
@@ -72,3 +96,4 @@ Owner harus `CN=...` milik Anda, bukan `CN=Android Debug`.
 - [ ] Build ditandatangani keystore release (bukan debug)
 - [ ] Uji install di atas versi sebelumnya (data lama tetap ada)
 - [ ] SHA-256 dipublikasikan bersama APK
+- [ ] Link unduhan bisa dibuka tanpa login GitHub

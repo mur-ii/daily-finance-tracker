@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../core/theme/app_theme.dart';
@@ -15,6 +16,9 @@ class App extends ConsumerWidget {
       title: 'Daily Finance Tracker',
       theme: AppTheme.light,
       themeMode: ThemeMode.light,
+      locale: const Locale('id', 'ID'),
+      supportedLocales: const [Locale('id', 'ID')],
+      localizationsDelegates: GlobalMaterialLocalizations.delegates,
       routerConfig: ref.watch(routerProvider),
     );
   }

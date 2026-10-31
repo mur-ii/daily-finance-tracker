@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:intl/intl.dart';
 
 import '../../../app/routes.dart';
 import '../../../core/theme/app_dimens.dart';
@@ -53,7 +52,7 @@ class HomeScreen extends ConsumerWidget {
               ),
               PopupMenuItem(
                 value: _MenuAction.about,
-                child: Text('Tentang pengembang'),
+                child: Text('Tentang aplikasi'),
               ),
             ],
           ),
@@ -175,8 +174,8 @@ class _Dashboard extends ConsumerWidget {
             icon: t.category.icon,
             title: t.category.label,
             subtitle: t.note.isEmpty
-                ? DateFormat.MMMd().format(t.date)
-                : '${t.note} · ${DateFormat.MMMd().format(t.date)}',
+                ? formatDayMonth(t.date)
+                : '${t.note} · ${formatDayMonth(t.date)}',
             amount: t.amount,
             onTap: () => showTransactionSheet(
               context,

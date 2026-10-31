@@ -8,7 +8,8 @@ belanja mengurangi jatah hari berikutnya.
 
 Prinsip produk:
 - **Tanpa akun, tanpa internet.** Semua data tersimpan lokal (SQLite +
-  SharedPreferences). Build release tidak meminta izin `INTERNET`.
+  SharedPreferences). Build release tidak meminta izin `INTERNET`, dan data
+  tidak ikut Auto Backup Android (`allowBackup="false"`).
 - **Satu angka utama.** Layar utama selalu menjawab "berapa yang boleh saya
   pakai hari ini?".
 - **Nominal Rupiah bulat.** Tidak ada desimal; disimpan sebagai `int`.
@@ -21,10 +22,13 @@ Prinsip produk:
    periode aktif, semua route diarahkan ke sini.
 4. **Pengeluaran Wajib** — user mendaftar tagihan wajib (Kos, Listrik,
    Internet). Total tagihan dipotong dari Saldo Awal menjadi Sisa Dana Bersih.
-   Bisa ditambah/diubah/dihapus kapan saja dari menu home.
+   Bisa ditambah/diubah/dihapus kapan saja dari menu home. Perubahan baru
+   tersimpan saat menekan Selesai; kembali dengan perubahan yang belum tersimpan
+   meminta konfirmasi.
 5. **Daily Tracking / Home** (`/`) — menampilkan "Limit Jajan Hari Ini",
    proyeksi limit besok, streak, dan daftar transaksi. Tombol "+" membuka sheet
-   pencatatan pengeluaran (nominal, kategori, tanggal, catatan).
+   pencatatan pengeluaran (nominal, kategori, tanggal, catatan). Setelah periode
+   berakhir, tombol "+" hilang dan muncul ajakan memulai periode baru.
 6. **Auto-Calculation** — setiap perubahan transaksi/tagihan langsung
    menghitung ulang limit hari ini dan hari-hari berikutnya.
 7. **Tidak Jajan** — bila hari ini tidak ada pengeluaran, user bisa menandai
@@ -35,7 +39,7 @@ Prinsip produk:
    beserta ringkasan; detail bersifat read-only. Periode arsip bisa dihapus.
 10. **Pengaturan** (`/settings`) — pengingat harian (on/off, jam; default
     20:00) dan "Hapus semua data".
-11. **Tentang Pengembang** (`/about`) — profil dan tautan pengembang.
+11. **Tentang Aplikasi** (`/about`) — versi, fitur, privasi, lisensi, dan profil singkat pengembang.
 
 ## 3. Daftar Fitur
 | Fitur | Keterangan |
@@ -44,16 +48,17 @@ Prinsip produk:
 | Pengeluaran wajib | CRUD; opsional disalin ke periode baru |
 | Transaksi harian | CRUD; kategori Makan, Transport, Belanja, Lainnya; tanggal harus di dalam periode |
 | Limit harian + rollover | Lihat [03_Calculation_Logic.md](03_Calculation_Logic.md) |
-| Status overbudget | Limit < 0 ditampilkan merah |
+| Status limit | "Hampir habis" saat 80% dana hari ini terpakai; "Overbudget" dan angka merah saat limit < 0 |
+| Banner hemat | Tampil saat ada sisa dari hari sebelumnya yang menambah limit hari ini |
 | Streak pencatatan | Hari berturut-turut ada transaksi atau ditandai "Tidak jajan" |
 | Pengingat harian | Notifikasi lokal terjadwal (inexact), tetap aktif setelah reboot |
 | Riwayat periode | Ringkasan & detail read-only, hapus arsip |
-| Reset data | Menghapus semua periode, tagihan, transaksi, dan hari tidak jajan |
+| Reset data | Menghapus semua periode, tagihan, transaksi, dan hari tidak jajan; wajib mengetik `HAPUS` |
 
 ## 4. Di Luar Cakupan (v1)
 - Sinkronisasi cloud, multi-perangkat, akun.
 - Pemasukan tambahan di tengah periode.
-- Ekspor/impor data.
+- Ekspor/impor data, sehingga data tidak bisa dipindahkan ke perangkat lain.
 - iOS dan desktop (proyek hanya menyiapkan Android).
 
 ## 5. Tech Stack

@@ -18,7 +18,6 @@ class TransactionListTile extends StatelessWidget {
     required this.title,
     required this.amount,
     this.subtitle,
-    this.isExpense = true,
     this.onTap,
     this.trailing,
     this.selected = false,
@@ -28,9 +27,8 @@ class TransactionListTile extends StatelessWidget {
   final String title;
   final String? subtitle;
 
-  /// Nominal positif dalam Rupiah; tanda ditentukan oleh [isExpense].
+  /// Nominal positif dalam Rupiah; ditampilkan dengan tanda minus.
   final int amount;
-  final bool isExpense;
   final VoidCallback? onTap;
 
   /// Aksi tambahan di paling kanan, mis. tombol hapus.
@@ -44,8 +42,6 @@ class TransactionListTile extends StatelessWidget {
     final colors = context.colors;
     final semantic = context.semanticColors;
     final textTheme = context.textTheme;
-    final amountColor = isExpense ? semantic.danger : semantic.success;
-    final sign = isExpense ? '-' : '+';
 
     return NeoBox(
       color: selected ? semantic.highlight : colors.surface,
@@ -98,9 +94,9 @@ class TransactionListTile extends StatelessWidget {
           ),
           const SizedBox(width: AppSpacing.sm),
           Text(
-            '$sign${formatRupiah(amount)}',
+            '-${formatRupiah(amount)}',
             style: textTheme.bodyMedium?.copyWith(
-              color: amountColor,
+              color: semantic.danger,
               fontWeight: FontWeight.w700,
               fontFeatures: const [FontFeature.tabularFigures()],
             ),

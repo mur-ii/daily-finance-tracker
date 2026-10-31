@@ -102,41 +102,35 @@ class FixedExpensesNotifier extends AsyncNotifier<List<FixedExpense>> {
     return ref.watch(fixedExpenseRepositoryProvider).listByPeriod(period.id!);
   }
 
-  Future<void> add({required String name, required int amount}) async {
+  /// Menyamakan tagihan periode aktif dengan [draft]. Item tanpa id ditambahkan,
+  /// item tersimpan yang tidak ada di [draft] dihapus.
+  Future<void> saveDraft(List<FixedExpense> draft) async {
     final period = await ref.read(activePeriodProvider.future);
     if (period == null) {
       throw StateError('Tidak ada periode aktif.');
     }
-    await ref
-        .read(fixedExpenseRepositoryProvider)
-        .add(
-          FixedExpense(periodId: period.id!, name: name.trim(), amount: amount),
-        );
-    ref.invalidateSelf();
-    await future;
-  }
+    final repo = ref.read(fixedExpenseRepositoryProvider);
+    final saved = await repo.listByPeriod(period.id!);
+    final savedById = {for (final e in saved) e.id: e};
+    final draftIds = {for (final e in draft) e.id};
 
-  Future<void> edit(
-    FixedExpense expense, {
-    required String name,
-    required int amount,
-  }) async {
-    await ref
-        .read(fixedExpenseRepositoryProvider)
-        .update(
-          FixedExpense(
-            id: expense.id,
-            periodId: expense.periodId,
-            name: name.trim(),
-            amount: amount,
-          ),
-        );
-    ref.invalidateSelf();
-    await future;
-  }
-
-  Future<void> remove(int id) async {
-    await ref.read(fixedExpenseRepositoryProvider).delete(id);
+    await repo.saveChanges(
+      added: [
+        for (final e in draft)
+          if (e.id == null) e,
+      ],
+      updated: [
+        for (final e in draft)
+          if (e.id != null &&
+              (savedById[e.id]?.name != e.name ||
+                  savedById[e.id]?.amount != e.amount))
+            e,
+      ],
+      removedIds: [
+        for (final e in saved)
+          if (!draftIds.contains(e.id)) e.id!,
+      ],
+    );
     ref.invalidateSelf();
     await future;
   }

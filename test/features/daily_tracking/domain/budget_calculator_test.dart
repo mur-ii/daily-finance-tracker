@@ -57,7 +57,6 @@ void main() {
   test('overbudget saat pengeluaran melebihi akumulasi jatah', () {
     final s = run(txs: [tx(start, 150000)], today: start);
     expect(s.todayLimit, -50000);
-    expect(s.isOverBudget, isTrue);
   });
 
   test('transaksi setelah hari ini tidak dihitung', () {
@@ -90,7 +89,7 @@ void main() {
   test('sisa dana negatif menghasilkan limit negatif', () {
     final s = run(fixedExpenses: [fixed(4000000)], today: start);
     expect(s.netFunds, -1000000);
-    expect(s.isOverBudget, isTrue);
+    expect(s.todayLimit, isNegative);
   });
 
   test('daysCount 0 melempar ArgumentError', () {

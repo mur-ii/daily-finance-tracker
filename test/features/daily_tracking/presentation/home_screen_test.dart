@@ -62,7 +62,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text(formatRupiah(60000)), findsWidgets);
-    expect(colorOf(tester, formatRupiah(60000)), isNot(overBudgetColor));
+    expect(colorOf(tester, formatRupiah(60000)), isNot(AppColors.danger));
     expect(find.textContaining('Belum ada pengeluaran'), findsNothing);
   });
 
@@ -76,7 +76,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Overbudget'), findsOneWidget);
-    expect(colorOf(tester, formatRupiah(-50000)), overBudgetColor);
+    expect(colorOf(tester, formatRupiah(-50000)), AppColors.danger);
   });
 
   testWidgets('hapus transaksi mengembalikan limit', (tester) async {
@@ -88,6 +88,9 @@ void main() {
     await tester.tap(find.text('Simpan'));
     await tester.pumpAndSettle();
 
+    // Gulir sampai habis agar tombol hapus tidak berada di bawah FAB.
+    await tester.drag(find.byType(ListView), const Offset(0, -500));
+    await tester.pumpAndSettle();
     await tester.tap(find.byTooltip('Hapus'));
     await tester.pumpAndSettle();
     await tester.tap(find.text('Hapus'));

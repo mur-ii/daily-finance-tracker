@@ -1,6 +1,7 @@
 # Alur Kerja Git
 
-Repository: https://github.com/mur-ii/daily-finance-tracker (privat).
+Repository: https://github.com/mur-ii/daily-finance-tracker. Dokumen ini panduan
+untuk pengelola; masukan dari luar mengikuti [CONTRIBUTING](../CONTRIBUTING.md).
 
 ## 1. Branch
 | Branch | Fungsi | Dibuat dari | Merge ke | Cara merge |

@@ -35,8 +35,6 @@ class BudgetSummary {
   /// Proyeksi limit besok jika hari ini tidak ada pengeluaran tambahan.
   /// Null jika hari ini adalah hari terakhir (atau sudah lewat).
   final int? tomorrowLimit;
-
-  bool get isOverBudget => todayLimit < 0;
 }
 
 /// Kalkulasi murni (tanpa Flutter/DB) sesuai docs/03_Calculation_Logic.md.

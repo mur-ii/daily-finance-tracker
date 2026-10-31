@@ -1,6 +1,8 @@
 import 'package:daily_tracking/core/theme/app_colors.dart';
+import 'package:daily_tracking/core/theme/app_dimens.dart';
 import 'package:daily_tracking/core/utils/money.dart';
 import 'package:daily_tracking/core/widgets/hero_daily_limit_card.dart';
+import 'package:daily_tracking/core/widgets/neo_background.dart';
 import 'package:daily_tracking/core/widgets/neo_box.dart';
 import 'package:daily_tracking/core/widgets/primary_button.dart';
 import 'package:daily_tracking/core/widgets/transaction_list_tile.dart';
@@ -41,6 +43,54 @@ void main() {
     expect(find.text(formatRupiah(-5000)), findsOneWidget);
     expect(find.text('Overbudget'), findsOneWidget);
     expect(_colorOf(tester, formatRupiah(-5000)), AppColors.danger);
+  });
+
+  testWidgets('HeroDailyLimitCard: border progress tidak tertimpa indikator', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      _wrap(const HeroDailyLimitCard(remaining: 5000, spentRatio: 0.5)),
+    );
+
+    final indicator = find.byType(LinearProgressIndicator);
+    final frame = find.ancestor(
+      of: indicator,
+      matching: find.byType(Container),
+    );
+    expect(
+      tester.getSize(frame.first).height,
+      tester.getSize(indicator).height + AppNeo.borderWidth * 2,
+    );
+  });
+
+  testWidgets('NeoBackground menjaga konten di atas navigation bar', (
+    tester,
+  ) async {
+    late double bottomPadding;
+    await tester.pumpWidget(
+      MediaQuery(
+        data: const MediaQueryData(padding: EdgeInsets.only(bottom: 48)),
+        child: Directionality(
+          textDirection: TextDirection.ltr,
+          child: NeoBackground(
+            child: Builder(
+              builder: (context) {
+                bottomPadding = MediaQuery.paddingOf(context).bottom;
+                return const SizedBox.expand(key: ValueKey('content'));
+              },
+            ),
+          ),
+        ),
+      ),
+    );
+
+    final screenHeight =
+        tester.view.physicalSize.height / tester.view.devicePixelRatio;
+    expect(
+      tester.getBottomLeft(find.byKey(const ValueKey('content'))).dy,
+      screenHeight - 48,
+    );
+    expect(bottomPadding, 0);
   });
 
   testWidgets('TransactionListTile: pengeluaran merah dengan tanda minus', (
