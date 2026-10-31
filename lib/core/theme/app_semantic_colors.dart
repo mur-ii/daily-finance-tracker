@@ -13,7 +13,6 @@ class AppSemanticColors extends ThemeExtension<AppSemanticColors> {
     required this.warning,
     required this.danger,
     required this.textSecondary,
-    required this.border,
     required this.highlight,
   });
 
@@ -22,7 +21,6 @@ class AppSemanticColors extends ThemeExtension<AppSemanticColors> {
     warning: AppColors.warning,
     danger: AppColors.danger,
     textSecondary: AppColors.textSecondary,
-    border: AppColors.ink,
     highlight: AppColors.yellow,
   );
 
@@ -31,9 +29,6 @@ class AppSemanticColors extends ThemeExtension<AppSemanticColors> {
   final Color danger;
 
   final Color textSecondary;
-
-  /// Border & hard shadow (hitam pekat).
-  final Color border;
 
   /// Aksen kuning untuk item aktif, tag, dan baris terpilih.
   final Color highlight;
@@ -44,7 +39,6 @@ class AppSemanticColors extends ThemeExtension<AppSemanticColors> {
     Color? warning,
     Color? danger,
     Color? textSecondary,
-    Color? border,
     Color? highlight,
   }) {
     return AppSemanticColors(
@@ -52,7 +46,6 @@ class AppSemanticColors extends ThemeExtension<AppSemanticColors> {
       warning: warning ?? this.warning,
       danger: danger ?? this.danger,
       textSecondary: textSecondary ?? this.textSecondary,
-      border: border ?? this.border,
       highlight: highlight ?? this.highlight,
     );
   }
@@ -65,7 +58,6 @@ class AppSemanticColors extends ThemeExtension<AppSemanticColors> {
       warning: Color.lerp(warning, other.warning, t)!,
       danger: Color.lerp(danger, other.danger, t)!,
       textSecondary: Color.lerp(textSecondary, other.textSecondary, t)!,
-      border: Color.lerp(border, other.border, t)!,
       highlight: Color.lerp(highlight, other.highlight, t)!,
     );
   }

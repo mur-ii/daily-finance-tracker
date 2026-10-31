@@ -45,13 +45,29 @@ DST ([`date_utils.dart`](../lib/core/utils/date_utils.dart)).
    `tomorrowLimit = allowanceFor(dayNumber + 1) - totalSpent`,
    bernilai `null` bila hari ini hari terakhir atau periode sudah berakhir.
 
-*Jika `todayLimit < 0` (`isOverBudget`), UI menampilkan status merah (Overbudget).*
-
 ### Contoh
 Saldo 3.100.000, tagihan 1.000.000, 30 hari →
 `netFunds = 2.100.000`, `dailyBase = 70.000`.
 Hari ke-3, total belanja 150.000 → `todayLimit = 210.000 - 150.000 = 60.000`,
 `tomorrowLimit = 280.000 - 150.000 = 130.000`.
+
+### Tampilan di Home
+Dihitung di [`home_screen.dart`](../lib/features/daily_tracking/presentation/home_screen.dart)
+dan [`hero_daily_limit_card.dart`](../lib/core/widgets/hero_daily_limit_card.dart):
+
+```
+spentRatio = spentToday / (todayLimit + spentToday)
+             (setelah periode berakhir: totalSpent / accumulatedAllowance;
+              bernilai 1 bila penyebutnya <= 0)
+rollover   = todayLimit + spentToday - dailyBase
+```
+
+| Kondisi | Tampilan |
+| --- | --- |
+| `todayLimit < 0` | Tag "Overbudget", angka dan progress bar merah |
+| `spentRatio >= 0.8` | Tag "Hampir habis", progress bar kuning |
+| Selain itu | Tanpa tag, progress bar hitam |
+| `rollover > 0` | Banner "Hemat" (selama periode berjalan) |
 
 ## 5. Aturan Transaksi
 - Tanggal transaksi harus berada di dalam periode:

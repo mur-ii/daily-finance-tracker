@@ -1,7 +1,7 @@
 # Panduan Pengembangan
 
 ## 1. Prasyarat
-- Flutter SDK dengan Dart `^3.13.7` (lihat `environment` di `pubspec.yaml`).
+- Flutter 3.47 (stable) dengan Dart `^3.13.7` (lihat `environment` di `pubspec.yaml`).
 - Android Studio (Android SDK + JDK bawaan `jbr`) untuk build Android.
 - Perangkat/emulator Android.
 
@@ -20,13 +20,14 @@ Konfigurasi VS Code (debug/profile/release) ada di `.vscode/launch.json`.
 | `test/features/daily_tracking/domain/` | `BudgetCalculator`, `StreakCalculator` (unit, murni) |
 | `test/features/daily_tracking/data/` | Repository sqflite memakai DB in-memory `sqflite_common_ffi` |
 | `test/features/daily_tracking/presentation/` | Providers, HomeScreen, alur transaksi (widget test) |
-| `test/features/budget_period/`, `onboarding/`, `settings/` | Widget test layar |
-| `test/core/` | Validators & widget reusable |
+| `test/features/budget_period/`, `onboarding/`, `settings/`, `about/` | Widget test layar |
+| `test/core/` | Format tanggal, validators & widget reusable |
 | `test/support/fake_repositories.dart` | Fake repository untuk widget test |
+| `test/flutter_test_config.dart` | Konfigurasi global yang berlaku untuk semua test |
 
 Pola: override `appDatabaseProvider`/repository provider dan `todayProvider`
-di `ProviderScope` test; `reminderServiceProvider` diganti fake. Mocking
-memakai `mocktail`.
+di `ProviderScope` test; `reminderServiceProvider` diganti fake. Test memakai
+fake buatan sendiri, tanpa library mocking.
 
 ## 4. Konvensi Kode
 - Lint: `flutter_lints` (`analysis_options.yaml`). `flutter analyze` harus bersih.
@@ -34,13 +35,15 @@ memakai `mocktail`.
 - Uang selalu `int` Rupiah; format tampilan lewat `formatRupiah`, parsing input
   lewat `parseRupiah` ([`money.dart`](../lib/core/utils/money.dart)).
 - Bandingkan tanggal dengan `dateOnly`/`daysBetween`, jangan `DateTime` mentah.
+- Tampilkan tanggal lewat `formatDate`/`formatDayMonth`/`formatFullDate`
+  ([`date_utils.dart`](../lib/core/utils/date_utils.dart)).
 - Logika bisnis baru masuk `domain/` sebagai fungsi murni + unit test.
 - Warna & ukuran hanya dari token `AppColors`/`AppSpacing`/`AppNeo`.
 
 ## 5. Menambah Layar / Route
 1. Tambah konstanta path di [`routes.dart`](../lib/app/routes.dart).
 2. Daftarkan `GoRoute` di [`router.dart`](../lib/app/router.dart), bungkus
-   dengan `NeoBackground`.
+   dengan `NeoBackground` (latar dan jarak aman navigation bar).
 3. Navigasi memakai `context.go(...)`/`context.push(...)` dengan konstanta path.
 
 ## 6. Menambah Fitur

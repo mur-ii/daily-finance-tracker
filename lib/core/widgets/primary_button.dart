@@ -3,9 +3,8 @@ import 'package:flutter/material.dart';
 import '../theme/theme_context.dart';
 import 'neo_box.dart';
 
-/// Tombol aksi utama: [NeoButton] hitam dengan teks putih tebal. Saat
-/// [isLoading], tombol nonaktif dan menampilkan spinner tanpa mengubah
-/// lebarnya.
+/// Tombol aksi utama selebar parent: [NeoButton] hitam dengan teks putih tebal.
+/// Saat [isLoading], tombol nonaktif dan menampilkan spinner.
 class PrimaryButton extends StatelessWidget {
   const PrimaryButton({
     super.key,
@@ -13,16 +12,12 @@ class PrimaryButton extends StatelessWidget {
     required this.onPressed,
     this.icon,
     this.isLoading = false,
-    this.expand = true,
   });
 
   final String label;
   final VoidCallback? onPressed;
   final IconData? icon;
   final bool isLoading;
-
-  /// Lebar penuh mengikuti parent.
-  final bool expand;
 
   @override
   Widget build(BuildContext context) {
@@ -45,11 +40,12 @@ class PrimaryButton extends StatelessWidget {
             ],
           );
 
-    final button = NeoButton(
-      onPressed: isLoading ? null : onPressed,
-      child: Semantics(label: isLoading ? label : null, child: child),
+    return SizedBox(
+      width: double.infinity,
+      child: NeoButton(
+        onPressed: isLoading ? null : onPressed,
+        child: Semantics(label: isLoading ? label : null, child: child),
+      ),
     );
-
-    return expand ? SizedBox(width: double.infinity, child: button) : button;
   }
 }

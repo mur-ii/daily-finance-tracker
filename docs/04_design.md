@@ -19,12 +19,14 @@ dan kode berbeda, **kode yang benar** — perbarui dokumen ini.
 | --- | --- | --- |
 | `ink` | `#000000` | Border, hard shadow, teks utama |
 | `surface` | `#FFFFFF` | Latar card, form, daftar transaksi |
-| `background` / `yellow` | `#FFDE00` | Latar utama aplikasi; state aktif |
-| `blue` | `#1D4ED8` | Aksen, blok chart |
-| `green` (`success`) | `#22C55E` | Dalam anggaran (`withinBudgetColor`) |
-| `red` (`danger`) | `#EF4444` | Overbudget (`overBudgetColor`), aksi berbahaya |
+| `background` / `yellow` (`warning`) | `#FFDE00` | Latar utama aplikasi; state aktif; status "Hampir habis" |
+| `blue` | `#1D4ED8` | Warna `secondary` pada tema Material |
+| `green` (`success`) | `#22C55E` | Sisa dana positif, banner hemat |
+| `red` (`danger`) | `#EF4444` | Overbudget, nominal pengeluaran, aksi berbahaya |
 | `textSecondary` | `#3F3F46` | Teks sekunder (tetap gelap demi kontras) |
 | `disabled` | `#E4E4E7` | Elemen nonaktif |
+
+Widget membaca warna status lewat `context.semanticColors` (`AppSemanticColors`).
 
 ## 3. Typography
 Font di-bundel di `assets/google_fonts/` (lisensi OFL), tidak diunduh saat runtime.
@@ -43,7 +45,7 @@ Font di-bundel di `assets/google_fonts/` (lisensi OFL), tidak diunduh saat runti
 ### A. Cards & Containers (`NeoBox`)
 Border 2px hitam, radius 4px, hard shadow 4×4. Pembatas internal: garis hitam 1–2px.
 
-### B. Buttons (`PrimaryButton`, FAB)
+### B. Buttons (`PrimaryButton`, `NeoButton`, `NeoFab`)
 - Background putih atau hitam (untuk tombol utama).
 - Border & shadow sama dengan card.
 - **Ditekan:** shadow hilang dan tombol turun sejauh `shadowOffset`.
@@ -54,10 +56,10 @@ Kotak putih, border hitam 2px; saat fokus border 3px.
 ### D. Komponen Lain
 | Widget | Fungsi |
 | --- | --- |
-| `HeroDailyLimitCard` | Kartu utama "Limit Jajan Hari Ini" + status warna |
-| `StatusBanner` | Banner status (overbudget, periode berakhir) |
-| `TransactionListTile` | Baris transaksi dengan ikon kategori |
-| `DangerConfirmDialog` | Konfirmasi aksi destruktif (hapus data) |
-| `AppDatePicker` | Pemilih tanggal (Syncfusion) bergaya neo |
-| `NeoBackground` | Latar kuning pembungkus setiap layar |
-| `SectionHeader`, `DetailRow` | Judul seksi & baris label–nilai |
+| `HeroDailyLimitCard`, `HeroLimitDetailRow` | Kartu utama "Limit Jajan Hari Ini" + status warna, dan baris detailnya |
+| `StatusBanner` | Banner status (streak, hemat, periode berakhir) |
+| `TransactionListTile` | Baris pengeluaran atau tagihan dengan ikon |
+| `showDangerConfirmDialog` | Konfirmasi aksi destruktif (hapus data) |
+| `AppDateField` | Field dan pemilih tanggal (`CalendarDatePicker` bawaan Flutter) bergaya neo |
+| `NeoBackground` | Latar kuning pembungkus setiap layar; menjaga konten di atas navigation bar |
+| `SectionHeader`, `EmptyHint`, `DetailRow` | Judul seksi, teks daftar kosong, dan baris label–nilai |

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:intl/intl.dart';
 
 import '../../../app/routes.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_dimens.dart';
 import '../../../core/theme/theme_context.dart';
+import '../../../core/utils/date_utils.dart';
 import '../../../core/utils/money.dart';
 import '../../../core/widgets/detail_row.dart';
 import '../../../core/widgets/neo_box.dart';
@@ -54,7 +54,6 @@ class _PeriodCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final period = data.period;
     final summary = data.summary;
-    final fmt = DateFormat.yMMMd();
     final remaining = summary.netFunds - summary.totalSpent;
     final semantic = context.semanticColors;
 
@@ -69,8 +68,8 @@ class _PeriodCard extends StatelessWidget {
             children: [
               Expanded(
                 child: Text(
-                  '${fmt.format(period.startDate)} - '
-                  '${fmt.format(period.endDate)}',
+                  '${formatDate(period.startDate)} - '
+                  '${formatDate(period.endDate)}',
                   style: context.textTheme.titleMedium,
                 ),
               ),

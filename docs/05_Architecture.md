@@ -22,7 +22,7 @@ lib/
     ├── budget_period/        # Setup, periode baru, riwayat & detail
     ├── onboarding/           # Splash, onboarding, prefs onboarding
     ├── settings/             # Pengaturan pengingat, hapus semua data
-    └── about/                # Tentang pengembang
+    └── about/                # Tentang aplikasi
 ```
 
 ## 2. Layer
@@ -47,9 +47,10 @@ Fitur `budget_period` memakai entity, repository, dan provider dari
 | Provider | Jenis | Isi |
 | --- | --- | --- |
 | `activePeriodProvider` | AsyncNotifier | Periode aktif; aksi `startNew`, `deleteArchived`, `resetAll` |
-| `fixedExpensesProvider` | AsyncNotifier | Tagihan periode aktif; CRUD |
-| `transactionsProvider` | AsyncNotifier | Transaksi periode aktif; CRUD |
-| `noSpendDaysProvider` | AsyncNotifier | Hari "Tidak jajan" |
+| `fixedExpensesProvider` | AsyncNotifier | Tagihan periode aktif; aksi `saveDraft` (tambah, ubah, hapus sekaligus) |
+| `transactionsProvider` | AsyncNotifier | Transaksi periode aktif; aksi `save`, `remove` |
+| `noSpendDaysProvider` | AsyncNotifier | Hari "Tidak jajan"; aksi `markToday` |
+| `streakProvider` | FutureProvider | Streak pencatatan |
 | `dashboardProvider` | FutureProvider | Periode + `BudgetSummary` + transaksi untuk home |
 | `periodHistoryProvider` | FutureProvider.autoDispose | Semua periode + ringkasan |
 | `periodDetailProvider` | FutureProvider.autoDispose.family | Detail satu periode |
@@ -73,12 +74,13 @@ Definisi di [`router.dart`](../lib/app/router.dart).
   berlatar kuning penuh.
 
 ## 5. Startup (`main.dart`)
-1. `GoogleFonts.config.allowRuntimeFetching = false` dan daftarkan lisensi OFL.
-2. `openAppDatabase()`.
-3. Inisialisasi `LocalReminderService` (zona waktu lokal) dan jadwalkan ulang
+1. `initializeDateFormatting` untuk format tanggal Indonesia.
+2. `GoogleFonts.config.allowRuntimeFetching = false` dan daftarkan lisensi OFL.
+3. `openAppDatabase()`.
+4. Inisialisasi `LocalReminderService` (zona waktu lokal) dan jadwalkan ulang
    pengingat bila aktif. Kegagalan di langkah ini hanya di-log — pengingat
    bukan fitur inti dan tidak boleh menahan aplikasi.
-4. `runApp(ProviderScope(overrides: [...], child: App()))`.
+5. `runApp(ProviderScope(overrides: [...], child: App()))`.
 
 ## 6. Pengingat Harian
 `LocalReminderService.scheduleDaily` membatalkan jadwal lama lalu memakai

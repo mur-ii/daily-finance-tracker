@@ -6,7 +6,7 @@ plugins {
     id("dev.flutter.flutter-gradle-plugin")
 }
 
-// Kredensial keystore release, lihat README. File ini di-ignore git.
+// Kredensial keystore release, lihat docs/07_Release_Guide.md. File ini di-ignore git.
 val keystorePropertiesFile = rootProject.file("key.properties")
 val keystoreProperties = Properties().apply {
     if (keystorePropertiesFile.exists()) {
@@ -69,6 +69,14 @@ android {
                 signingConfigs.getByName("debug")
             }
         }
+    }
+}
+
+// Release tanpa libflutter.so x86_64: library plugin x86_64 harus ikut dibuang,
+// kalau tidak perangkat x86_64 bisa memasang APK yang crash saat dibuka.
+androidComponents {
+    onVariants(selector().withBuildType("release")) { variant ->
+        variant.packaging.jniLibs.excludes.add("lib/x86_64/**")
     }
 }
 
